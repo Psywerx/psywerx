@@ -1,0 +1,15 @@
+@CHARSET "UTF-8";
+
+h2 { padding: 10px 0px; }
+
+#header-bg { height:100px; background-color: #FAFAFA; }
+
+#header-txt h1 { line-height: 100px; font-size: xx-large; }
+
+#content { text-align: center;}
+
+#content h2 { text-align: left; }
+
+#pass-count { font-size: xx-large; }
+
+input { font-size: x-large; padding:4px; }
