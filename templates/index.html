@@ -1,3 +1,13 @@
 {% extends "layout.html" %}
 {% block content %}
+<ul>
+
+{% for p in projects %}
+<li>
+<a href="{{p.link}}">{{p.name}}</a>
+{{p.description}}
+[{{p.get_status_display}}]
+</li>
+{% endfor %}
+</ul>
 {% endblock %}

@@ -4,7 +4,7 @@ PROJECT_STATUS = (
     ('D', 'Development'),
     ('L', 'Live'),
     ('B', 'Beta'),
-    ('A', 'Abendoned'),
+    ('A', 'Abandoned'),
 )
 
 class Project(models.Model):
