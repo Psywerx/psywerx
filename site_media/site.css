@@ -1,0 +1,34 @@
+/* http://colorschemedesigner.com/#0011T1BsOw0w0 */
+
+/*
+E6DADA  ACA6A6  954747  F2E9E9  F2ECEC
+*/
+
+@CHARSET "UTF-8";
+
+* { font-family: 'Ubuntu', arial, serif; }
+
+html, body { height:100%; background-color: #F2ECEC; line-height: 22px; font-size: 16px; }
+
+a { color: #954747; text-decoration: none; text-shadow: 0 1px 0px white; font-weight: bold; }
+
+#header-bg { background-color: #954747; height: 100px; }
+
+#header-txt { color: #F2ECEC; font-size: 40px; line-height: 100px; }
+
+.shadow-dark {
+	text-shadow: 0 2px 0px black;
+}
+
+#content p  { padding: 20px 0px;  }
+
+#content p:first-letter { font-size: 30px; color: #954747; font-weight: bold;  text-shadow: 0 1px 0px white; }
+
+#content h1 { padding: 20px 0px; font-size: 20px; text-shadow: 0 1px 0px white; }
+
+.wrapper              { min-height: 100%; height: auto !important; height: 100%; margin: 0 auto -120px; }
+
+.footer, .push        { height: 120px; clear:both; }
+
+#footer               { background-color: #444546; line-height: 40px; color:white; text-shadow: none;  }
+
