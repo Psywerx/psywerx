@@ -14,7 +14,7 @@ class Language(models.Model):
         return self.name
 
 class Framework(models.Model):
-    name = models.CharField(max_length= 255)
+    name = models.CharField(max_length = 255)
     language = models.OneToOneField(Language)
     
     def __unicode__(self):
@@ -29,3 +29,27 @@ class Project(models.Model):
     
     def __unicode__(self):
         return self.name
+
+class MemberLink(models.Model):
+    name = models.CharField(max_length = 255)
+    url = models.CharField(max_length = 255)   
+    
+    def __unicode__(self):
+        return self.name 
+    
+class Member(models.Model):
+    name = models.CharField(max_length = 255)
+    description = models.TextField()
+    Link = models.ManyToManyField(MemberLink)
+    
+    def __unicode__(self):
+        return self.name
+    
+class Static(models.Model):
+    title = models.CharField(max_length = 255)
+    description = models.TextField()
+    
+    def __unicode__(self):
+        return self.title
+    
+    

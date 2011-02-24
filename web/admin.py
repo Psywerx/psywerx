@@ -1,7 +1,9 @@
-from web.models import Project, Framework, Language
+from web.models import Project, Framework, Language, Member, MemberLink, Static
 from django.contrib import admin
-from django.db import transaction
 
 admin.site.register(Project)
 admin.site.register(Framework)
 admin.site.register(Language)
+admin.site.register(Member)
+admin.site.register(MemberLink)
+admin.site.register(Static)
