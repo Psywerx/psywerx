@@ -1,13 +1,39 @@
 {% extends "layout.html" %}
+
+{% block title %}
+{{static.title}}
+{% endblock %}
+
+{% block title-header %}
+{{static.title|safe}}
+{% endblock %}
+
 {% block content %}
-<ul>
+<div class="grid_12">
+{{static.description|safe}}
+</div>
+<div class="grid_8">
 <h1>Projects:</h1>
-{% for p in projects %}
-<li>
-<a href="{{p.link}}">{{p.name}}</a>
-{{p.description}}
-[{{p.get_status_display}}]
-</li>
-{% endfor %}
+<ul>
+
+	{% for p in projects %}
+	<li>
+	<a href="{{p.link}}">{{p.name}}</a>
+	{{p.description}}
+	[{{p.get_status_display}}]
+	</li>
+	{% endfor %}
 </ul>
+</div>
+<div class="grid_4">
+<h1>Members:</h1>
+<ul>
+    {% for m in members %}
+    <li>
+    {{m.name}} - {{m.description}}
+    </li>
+    {% endfor %}
+</ul>
+</div>
+
 {% endblock %}
