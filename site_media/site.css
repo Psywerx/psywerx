@@ -6,7 +6,7 @@ E6DADA  ACA6A6  954747  F2E9E9  F2ECEC
 
 @CHARSET "UTF-8";
 
-* { font-family: 'Ubuntu', arial, serif; }
+* { font-family: arial, serif; }
 
 html, body { height:100%; background-color: #F2ECEC; line-height: 22px; font-size: 16px; }
 
@@ -27,11 +27,21 @@ a { color: #954747; text-decoration: none; text-shadow: 0 1px 0px white; font-we
 #content p:first-letter { 
 	font-size: 42px; color: #954747; font-weight: bold;  
 	text-shadow: 0 1px 0px white; 
-	display: block; float: left; padding-top:3px;
+
 
 }
 
-#content h1 { padding: 20px 0px; font-size: 20px; text-shadow: 0 1px 0px white; }
+#content .description { color:#ACA6A6; text-shadow: 0 1px 0px white; }
+
+#content li { border-bottom: 1px solid white; padding:10px 0px; }
+
+#content div.technology { font-size: 12px; }
+
+#content div.technology h2, ul { display: inline; }
+
+#content div.technology li { border-bottom: 0px; display:inline; }
+
+#content h1 { padding: 10px 0px; font-size: 20px; text-shadow: 0 1px 0px white; }
 
 .wrapper              { min-height: 100%; height: auto !important; height: 100%; margin: 0 auto -30px; }
 

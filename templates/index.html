@@ -5,7 +5,11 @@
 {% endblock %}
 
 {% block title-header %}
-{{static.title|safe}}
+<a href="/">{{static.title|safe}}</a>
+{% endblock %}
+
+{% block footer %}
+{{static.footer|safe}}
 {% endblock %}
 
 {% block content %}
@@ -18,19 +22,35 @@
 
 	{% for p in projects %}
 	<li>
-	<a href="{{p.link}}">{{p.name}}</a>
-	{{p.description}}
-	[{{p.get_status_display}}]
+	<a href="{{p.link}}">{{p.name}}</a> -
+	<span class="description">{{p.description}}</span>
+    <div class="technology">
+    <h2>Frameworks:</h2>
+    <ul>
+    {% for t in p.framework.all %}
+    <li>{{ t.name }} ({{t.language}})</li>
+    {% endfor %}
+    </ul>
+    </div>
 	</li>
 	{% endfor %}
 </ul>
 </div>
 <div class="grid_4">
-<h1>Members:</h1>
+<h1>The team:</h1>
 <ul>
     {% for m in members %}
     <li>
-    {{m.name}} - {{m.description}}
+    {{m.name}} - <span class = "description">{{m.description}}</span>
+    <div class="technology">
+    <h2>Social:</h2>
+    {% if m.website %}<a href="{{m.website}}">Website</a>{% endif %}
+    {% if m.twitter %}<a href="{{m.twitter}}">Twitter</a>{% endif %}
+    {% if m.facebook %}<a href="{{m.facebook}}">Facebook</a>{% endif %}
+    {% if m.github %}<a href="{{m.github}}">Github</a>{% endif %}
+    {% if m.linkedin %}<a href="{{m.linkedin}}">Linkedin</a>{% endif %}
+    {% if m.googleprofile %}<a href="{{m.googleprofile}}">Google</a>{% endif %}
+    
     </li>
     {% endfor %}
 </ul>

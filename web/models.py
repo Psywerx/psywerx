@@ -25,30 +25,29 @@ class Project(models.Model):
     link = models.CharField(max_length = 255)
     description = models.TextField()
     status = models.CharField(max_length = 3, choices = PROJECT_STATUS)
-    framework = models.ForeignKey(Framework)
+    framework = models.ManyToManyField(Framework)
     
     def __unicode__(self):
         return self.name
-
-class MemberLink(models.Model):
-    name = models.CharField(max_length = 255)
-    url = models.CharField(max_length = 255)   
-    
-    def __unicode__(self):
-        return self.name 
     
 class Member(models.Model):
     name = models.CharField(max_length = 255)
     description = models.TextField()
-    Link = models.ManyToManyField(MemberLink)
-    
+    website = models.CharField(max_length = 255, blank = True)
+    twitter = models.CharField(max_length = 255, blank = True)
+    facebook = models.CharField(max_length = 255, blank = True)
+    github = models.CharField(max_length = 255, blank = True)
+    linkedin = models.CharField(max_length = 255, blank = True)
+    googleprofile = models.CharField(max_length = 255, blank = True)
+        
     def __unicode__(self):
         return self.name
     
 class Static(models.Model):
     title = models.CharField(max_length = 255)
     description = models.TextField()
-    
+    footer = models.CharField(max_length = 255)
+        
     def __unicode__(self):
         return self.title
     
