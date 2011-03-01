@@ -22,11 +22,12 @@ a { color: #954747; text-decoration: none; text-shadow: 0 1px 0px white; font-we
 	text-shadow: 0 2px 0px black;
 }
 
-#content p  { padding: 20px 0px; line-height: 20px;  }
+#content p  { padding: 20px 0px; line-height: 22px;  }
 
 #content p:first-letter { 
 	font-size: 42px; color: #954747; font-weight: bold;  
 	text-shadow: 0 1px 0px white; 
+	display: block; float:left; padding:8px 5px 5px 0px;
 
 
 }
