@@ -1,25 +1,12 @@
 {% extends "layout.html" %}
 
-{% block title %}
-{{static.title}}
-{% endblock %}
-
-{% block title-header %}
-<a href="/">{{static.title|safe}}</a>
-{% endblock %}
-
-{% block footer %}
-{{static.footer|safe}}
-{% endblock %}
-
 {% block content %}
 <div class="grid_12">
-{{static.description|safe}}
+{{settings.description|safe}}
 </div>
 <div class="grid_8">
 <h1>Projects:</h1>
 <ul>
-
 	{% for p in projects %}
 	<li>
 	<a href="{{p.link}}">{{p.name}}</a> -

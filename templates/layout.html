@@ -2,7 +2,7 @@
     "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 <head>
-    <title>{% block title %}{% endblock %}</title>
+    <title>{% block title %}{{settings.title}}{% endblock %}</title>
     <link href="/site_media/reset.css" rel="stylesheet" type="text/css" media="screen" />
     <link href="/site_media/960.css" rel="stylesheet" type="text/css" media="screen" />
     <link href="/site_media/site.css" rel="stylesheet" type="text/css" media="screen" />    
@@ -23,11 +23,11 @@
 	<div id="header-bg">
 		<div class="container_12">
 			<div class="grid_12"  id="header-txt">
-			<h1 class="shadow-dark">{% block title-header %}Psywerx.net{% endblock %}</h1>
+			<h1 class="shadow-dark">{% block title-header %}{{settings.title}}{% endblock %}</h1>
+
 			</div>
 		</div>
 	</div>
-
 	<div class="container_12" id = "content">	   
 			{% block content %}
 			{% endblock %}
@@ -38,7 +38,7 @@
 <div  id="footer" class="footer">
 <div class="container_12">
 <div class="grid_12">
-{% block footer %}{% endblock %}
+{{settings.footer|safe}}
 </div>
 </div>
 </div>
