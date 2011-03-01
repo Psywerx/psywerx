@@ -15,7 +15,7 @@ class Language(models.Model):
 
 class Framework(models.Model):
     name = models.CharField(max_length = 255)
-    language = models.OneToOneField(Language)
+    language = models.ForeignKey(Language)
     
     def __unicode__(self):
         return self.name
