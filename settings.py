@@ -2,7 +2,10 @@
 import os
 PROJECT_PATH = os.path.abspath(os.path.dirname(__file__))
 
-DEBUG = True
+DEFAULT_TITLE = "Psywerx.net"
+DEFAULT_FOOTER = "&copy; Psywerx.net"
+
+DEBUG = False
 TEMPLATE_DEBUG = DEBUG
 
 ADMINS = (

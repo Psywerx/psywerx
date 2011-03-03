@@ -3,6 +3,9 @@ from django.contrib import admin
 from django.conf import settings
 admin.autodiscover()
 
+handler500 = 'web.views.error500'
+handler404 = 'web.views.error404'
+
 urlpatterns = patterns('',
                        
     (r'^site_media/(?P<path>.*)$', 'django.views.static.serve',

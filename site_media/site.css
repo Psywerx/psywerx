@@ -25,11 +25,8 @@ a { color: #954747; text-decoration: none; text-shadow: 0 1px 0px white; font-we
 #content p  { padding: 20px 0px; line-height: 22px;  }
 
 #content p:first-letter { 
-	font-size: 42px; color: #954747; font-weight: bold;  
+	font-size: 32px; color: #954747; font-weight: bold;  
 	text-shadow: 0 1px 0px white; 
-	display: block; float:left; padding:8px 5px 5px 0px;
-
-
 }
 
 #content .description { color:#ACA6A6; text-shadow: 0 1px 0px white; }
@@ -47,6 +44,14 @@ a { color: #954747; text-decoration: none; text-shadow: 0 1px 0px white; font-we
 .wrapper              { min-height: 100%; height: auto !important; height: 100%; margin: 0 auto -30px; }
 
 .footer, .push        { height: 30px; clear:both; }
+
+.error                { text-align: center; }
+
+#darthkitty{ 
+				-moz-box-shadow: 1px 1px 10px black;
+				-webkit-box-shadow: 1px 1px 10px black;
+				box-shadow: 1px 1px 10px black;
+}
 
 #footer               { background-color: #444546; text-align:center; line-height: 30px; font-size: 14px; color:white; text-shadow: none;  }
 
