@@ -12,12 +12,15 @@
 	<a href="{{p.link}}">{{p.name}}</a> -
 	<span class="description">{{p.description}}</span>
     <div class="technology">
+    {% if p.framework.all %}
     <h2>Frameworks:</h2>
     <ul>
     {% for t in p.framework.all %}
     <li>{{ t.name }} ({{t.language}})</li>
     {% endfor %}
+    
     </ul>
+    {% endif %}
     </div>
 	</li>
 	{% endfor %}
