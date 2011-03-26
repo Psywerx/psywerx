@@ -1,7 +1,7 @@
 jQuery(document).ready(function(){
 	
 	
-	function relativeShadow(element, color){
+	function relativeShadow(element, color, shadow){
 		
 		
 		
@@ -28,7 +28,7 @@ jQuery(document).ready(function(){
 			diff.top = e.pageY - p.top;
 			diff.left = e.pageX - p.left;	
 		  
-			element.css('text-shadow', normalize(diff.left) + "px " + normalize(diff.top) +"px 5px "  + color);
+			element.css(shadow, normalize(diff.left) + "px " + normalize(diff.top) +"px 2px "  + color);
 		  
 		 //$('h1').html(e.pageX +', '+ e.pageY + ' ' + diff.top + ' ' + diff.left);
 		 }); 
@@ -36,8 +36,23 @@ jQuery(document).ready(function(){
 		
 	} 
 
-	r1 = new relativeShadow($("#header-h"), 'black');
+	r1 = new relativeShadow($("#header-h"), 'black', 'text-shadow');
+
 	
+	function rotate(element, deg){
+		$(element).transform({rotate: deg});
+		$(element).hover(function(){
+			
+			$(element).animate({rotate: '0deg'}, "fast", "swing");
+		}, function(){
+			
+			$(element).animate({rotate: deg}, "fast", "swing");
+		});
+	}
+	rotate("#projects", '1deg');
+	rotate("#team", '-1deg');
+	
+		
    
    
 

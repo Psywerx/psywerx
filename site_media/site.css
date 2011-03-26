@@ -14,7 +14,7 @@ a { color: #954747; text-decoration: none; text-shadow: 0 1px 0px white; font-we
 
 #header-bg { background-color: #954747; height: 100px; }
 
-#header-txt { color: #F2ECEC; font-size: 40px; line-height: 100px; }
+#header-txt { color: #F2ECEC; font-size: 40px; line-height: 100px; padding: 0px 10px; }
 
 #header-txt h1 { display: inline-block;}
 
@@ -24,7 +24,7 @@ a { color: #954747; text-decoration: none; text-shadow: 0 1px 0px white; font-we
 	text-shadow: -1px -2px 5px black;
 }
 
-#content p  { padding: 20px 0px; line-height: 22px;  }
+#content p  { padding: 20px 10px; line-height: 22px;  }
 
 #content p:first-letter { 
 	font-size: 32px; color: #954747; font-weight: bold;  
@@ -42,6 +42,8 @@ a { color: #954747; text-decoration: none; text-shadow: 0 1px 0px white; font-we
 #content div.technology li { border-bottom: 0px; display:inline; }
 
 #content h1 { padding: 10px 0px; font-size: 20px; text-shadow: 0 1px 0px white; }
+
+
 
 .wrapper              { min-height: 100%; height: auto !important; height: 100%; margin: 0 auto -30px; }
 
