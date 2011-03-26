@@ -26,10 +26,9 @@ jQuery(document).ready(function(){
 			var p = middle(element);
 			diff = new Object();
 			diff.top = e.pageY - p.top;
-			diff.left = e.pageX - p.left;
-		
+			diff.left = e.pageX - p.left;	
 		  
-			element.css('text-shadow', normalize(diff.left) + "px " + normalize(diff.top) +"px 0px " + color);
+			element.css('text-shadow', normalize(diff.left) + "px " + normalize(diff.top) +"px 5px "  + color);
 		  
 		 //$('h1').html(e.pageX +', '+ e.pageY + ' ' + diff.top + ' ' + diff.left);
 		 }); 
