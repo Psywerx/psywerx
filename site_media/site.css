@@ -43,7 +43,7 @@ a { color: #954747; text-decoration: none; text-shadow: 0 1px 0px white; font-we
 
 #content h1 { padding: 10px 0px; font-size: 20px; text-shadow: 0 1px 0px white; }
 
-
+.inner                { padding:0px 10px; }
 
 .wrapper              { min-height: 100%; height: auto !important; height: 100%; margin: 0 auto -30px; }
 

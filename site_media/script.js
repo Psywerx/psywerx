@@ -38,7 +38,8 @@ jQuery(document).ready(function(){
 
 	r1 = new relativeShadow($("#header-h"), 'black', 'text-shadow');
 
-	
+	//annoying if the box is large:
+	//dependency: jquery.transform-0.9.3.min.js
 	function rotate(element, deg){
 		$(element).transform({rotate: deg});
 		$(element).hover(function(){
@@ -49,10 +50,21 @@ jQuery(document).ready(function(){
 			$(element).animate({rotate: deg}, "fast", "swing");
 		});
 	}
-	rotate("#projects", '1deg');
-	rotate("#team", '-1deg');
+	//rotate("#projects", '1deg');
 	
+	
+	function setShadow(element){
 		
+		$(element).hover(function(){
+			
+			$(element).animate({boxShadow: '0 0 8px #AAA'}, "fast", "swing");
+		}, function(){
+			
+			$(element).animate({boxShadow: '0 0 0px #AAA'}, "fast", "swing");
+		});		
+	}
+	setShadow("#projects");
+	setShadow("#team");
    
    
 
