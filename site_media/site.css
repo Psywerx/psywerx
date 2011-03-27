@@ -12,6 +12,8 @@ html, body { height:100%; background-color: #F2ECEC; line-height: 22px; font-siz
 
 a { color: #954747; text-decoration: none; text-shadow: 0 1px 0px white; font-weight: bold; }
 
+h1 { font-family: 'Ubuntu', arial, serif; }
+
 #header-bg { background-color: #954747; height: 100px; }
 
 #header-txt { color: #F2ECEC; font-size: 40px; line-height: 100px; padding: 0px 10px; }
