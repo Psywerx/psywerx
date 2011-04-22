@@ -22,8 +22,7 @@
 jQuery(document).ready(function(){
 
 
-    $(window).konami(function(){ alert('Konami Code Activated!')});
-
+    $(window).konami(function(){ self.location = '/admin' });
 	
 	
 	function relativeShadow(element, color, shadow){
