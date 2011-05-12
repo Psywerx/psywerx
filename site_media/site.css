@@ -49,6 +49,8 @@ border-bottom: 1px solid white;}
 
 #content h1 { padding: 10px 0px; font-size: 20px; text-shadow: 0 1px 0px white; }
 
+#projects, #team { margin-bottom:10px; padding-bottom:10px; }
+
 .inner                { padding:0px 10px; }
 
 .wrapper              { min-height: 100%; height: auto !important; height: 100%; margin: 0 auto -30px; }
