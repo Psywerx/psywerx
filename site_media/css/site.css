@@ -39,7 +39,7 @@ border-bottom: 1px solid white;}
 
 #content .description { color:#ACA6A6; text-shadow: 0 1px 0px white; }
 
-#content ul { list-style-type: none;  }
+#content ul { list-style-type: none; margin-left:0px;  }
 
 #content li { border-bottom: 1px solid white; padding:10px 0px;  }
 
