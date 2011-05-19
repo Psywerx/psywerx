@@ -68,10 +68,10 @@ jQuery(document).ready(function(){
 		$(element).transform({rotate: deg});
 		$(element).hover(function(){
 			
-			$(element).animate({rotate: '0deg'}, "fast", "swing");
+			//$(element).animate({rotate: '0deg'}, {duration: "fast", queue : false, easing : "swing"});
 		}, function(){
 			
-			$(element).animate({rotate: deg}, "fast", "swing");
+			//$(element).animate({rotate: deg}, {duration: "fast", queue : false, easing : "swing"});
 		});
 	}
 	//rotate("#projects", '1deg');
@@ -81,10 +81,10 @@ jQuery(document).ready(function(){
 		
 		$(element).hover(function(){
 			
-			$(element).animate({boxShadow: '0 0 8px #AAA'}, "fast", "swing");
+			$(element).animate({boxShadow: '0 0 8px #AAA'}, {duration: "fast", queue : false, easing : "swing"});
 		}, function(){
 			
-			$(element).animate({boxShadow: '0 0 0px #AAA'}, "fast", "swing");
+			$(element).animate({boxShadow: '0 0 0px #AAA'}, {duration: "fast", queue : false, easing : "swing"});
 		});		
 	}
 	setShadow("#projects");
