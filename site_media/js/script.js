@@ -90,6 +90,20 @@ jQuery(document).ready(function(){
 	setShadow("#projects");
 	setShadow("#team");
    
-   
+    var bg = Math.random()*10000;
+    $('.header-bg').css({backgroundPosition: bg + 'px 0px'});
+    moveHeader = function(){
+    	var newbg;
+    	if (Math.random() < 0.5){
+    		newbg = bg - Math.floor(Math.random()*100) - 50;
+    	}
+    	else{
+    		newbg = bg + Math.floor(Math.random()*100) + 50;
+    	}
+    	$('.header-bg').css({backgroundPosition: bg + 'px 0px'}).animate({backgroundPositionX: newbg+'px'}, 'slow', 'swing');
+    	bg = newbg;
+    	setTimeout(moveHeader, Math.random()*10000+2000);
+    };
+    setTimeout(moveHeader, Math.random()*10000+2000);   
 
 });

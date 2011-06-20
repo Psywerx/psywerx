@@ -14,7 +14,7 @@ a { color: #954747; text-decoration: none; text-shadow: 0 1px 0px white; font-we
 
 h1 { font-family: 'Ubuntu', arial, serif; }
 
-#header-bg { background-color:#954747; background-image: url(/site_media/img/29-a.png),url(/site_media/img/37-a.png),url(/site_media/img/59-a.png), url(/site_media/img/53-a.png);
+.header-bg { background-color:#954747; background-image: url(/site_media/img/29-a.png),url(/site_media/img/37-a.png),url(/site_media/img/59-a.png), url(/site_media/img/53-a.png);
 padding:0;
 margin:0;
 height: 100px;
