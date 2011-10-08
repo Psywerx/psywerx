@@ -7,6 +7,16 @@ PROJECT_STATUS = (
     ('A', 'Abandoned'),
 )
 
+MSG_TYPES = (
+    ('M', 'Message'),
+    ('PM', 'Private Message'),
+    ('A', 'Action'),
+    ('P', 'Part'),
+    ('J', 'Join'),
+    ('T', 'Topic'),
+    ('O', 'Other'),
+)
+
 class Language(models.Model):
     name = models.CharField(max_length = 255)
     
@@ -50,3 +60,12 @@ class Static(models.Model):
         
     def __unicode__(self):
         return self.title
+    
+class Irc(models.Model):
+    raw = models.TextField()
+    time = models.DateTimeField(auto_now_add=True)
+    nick = models.CharField(max_length = 255)
+    name = models.CharField(max_length = 255, blank = True)
+    address = models.CharField(max_length = 1000)
+    msg_type = models.CharField(max_length = 3, choices = MSG_TYPES)
+    message = models.TextField()
