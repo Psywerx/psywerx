@@ -1,0 +1,11 @@
+{% extends "layout.html" %}
+
+{% block content %}
+<div class="grid_12">
+<form id = "irc-form" action="." method="post">
+{% csrf_token %}
+<input type="text" name="word" placeholder="Enter the magic word." /><br />
+<input type="submit" />
+</form>
+</div>
+{% endblock %}
