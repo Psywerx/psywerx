@@ -89,6 +89,8 @@ jQuery(document).ready(function(){
 	}
 	setShadow("#projects");
 	setShadow("#team");
+	setShadow("#irc");
+	setShadow("#irc-form");
    
     var bg = Math.random()*10000;
     $('.header-bg').css({backgroundPosition: bg + 'px 0px'});

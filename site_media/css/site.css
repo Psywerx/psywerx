@@ -110,6 +110,41 @@ h1 {
 	padding-bottom: 10px;
 }
 
+#irc{
+	
+	margin: 20px 0px;
+	padding-bottom: 10px;
+	
+}
+
+.irc-action {
+	font-style: italic;
+}
+.irc-event {
+	color:#AAA;
+}
+.irc-nick{
+	display: inline-block;
+
+}
+.irc-date{
+	
+	display:inline-block;
+	font-size: 12px;
+	clor: #000;
+	padding-right: 2px;
+}
+
+.irc-paginator{
+	display:inline-block;
+}
+/* .irc-nick:first-letter{
+	font-size: 26px;
+	color: #954747;
+	font-weight: bold;
+	text-shadow: 0 1px 0px white;
+} */
+
 .inner {
 	padding: 0px 10px;
 }
