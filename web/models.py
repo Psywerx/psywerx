@@ -41,7 +41,6 @@ class Project(models.Model):
     link = models.CharField(max_length = 255)
     description = models.TextField()
     status = models.CharField(max_length = 3, choices = PROJECT_STATUS)
-    action = models.BooleanField()
     framework = models.ManyToManyField(Framework, blank = True)
     
     def __unicode__(self):
