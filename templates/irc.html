@@ -1,5 +1,49 @@
 {% extends "layout.html" %}
 
 {% block content %}
-{{ hello }}
+<div class="gird_12 inner" id="irc">
+	{% for l in log.object_list %}
+	
+
+	{% if l.msg_type == 'J' %}
+	<div class="irc-event"><div class="irc-date">({{l.time}})</div><span class="irc-nick">{{l.nick}}</span> joined</div>
+	{% endif %}
+	
+	{% if l.msg_type == 'P' %}
+	<div class="irc-event"><div class="irc-date">({{l.time}})</div><span class="irc-nick">{{l.nick}}</span> parted</div>
+	{% endif %} 
+	
+	{% if l.msg_type == 'T' %}
+	<div class="irc-event"><div class="irc-date">({{l.time}})</div><span class="irc-nick">{{l.nick}}</span> changed the topic to {{l.message}}</div>
+	{% endif %} 
+	
+	{% if l.msg_type == 'N' %}
+	<div class="irc-event"><div class="irc-date">({{l.time}})</div><span class="irc-nick">{{l.nick}}</span> is now known as {{l.message}}</div>
+	{% endif %} 
+
+	{% if l.msg_type == 'M' %}
+	
+		{% if l.msg_action %}
+		<div class="irc-action"><div class="irc-date">({{l.time}})</div><span class="irc-nick">{{l.nick}}</span> {{l.message}}</div>
+		
+		{% else %}
+		
+		<div class="irc-message">
+		<div class="irc-date">({{l.time}})</div><span class="irc-nick">{{l.nick}}</span>: {{l.message}}
+		</div>
+		
+		{% endif %}
+	
+
+	{% endif %}
+	<div class="clear:both"></div>
+	{% endfor %}
+	{% if log.has_next %}
+	<div class="irc-paginator"><a href="/irc/{{log.next_page_number}}">Older</a></div>
+	{% endif %}
+	
+	{% if log.has_previous %}
+	<div class="irc-paginator"><a href="/irc/{{log.previous_page_number}}">Newer</a></div>
+	{% endif %}
+</div>
 {% endblock %}
