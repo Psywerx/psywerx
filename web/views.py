@@ -1,4 +1,5 @@
-from django.http import HttpResponse
+from django.core.paginator import Paginator
+from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import render_to_response
 from django.template import RequestContext
 from django.views.decorators.csrf import csrf_exempt
@@ -23,8 +24,24 @@ def irc_bot_add(request):
     return HttpResponse("NO")
     #return render_to_response('404.html', context_instance=RequestContext(request))
 
-def irc(request):
-    return render_to_response('irc.html', {'hello': 'world',}, context_instance=RequestContext(request))
+def irc(request, page=1):
+    
+    # Set the cookie
+    if request.POST:
+        if request.POST['word'] == 'cookie':
+            r = HttpResponseRedirect('.')
+            r.set_cookie("irctoken", "token", 60*60*24*356*100)
+            return r
+            
+    irc_token = request.COOKIES.get("irctoken", "")
+    
+    if irc_token == "token":
+        q = Irc.objects.all().order_by('time').reverse()
+        p = Paginator(q, 100)
+        
+        return render_to_response('irc.html', {'log': p.page(page),}, context_instance=RequestContext(request))
+    else:
+        return render_to_response('irc_access.html', {'hello': "aaa",}, context_instance=RequestContext(request))
 
 def error500(request, template_name = '500.html'):
     return render_to_response(template_name, context_instance=RequestContext(request))
