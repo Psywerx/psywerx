@@ -90,7 +90,7 @@ class Irc(models.Model):
             # process the user part:
             user = s[0].split('@')
             self.address = user[1]
-            user = user[0].split('!~')
+            user = user[0].split('!')
             self.nick = user[0][1:]
             self.name = user[1]
 
