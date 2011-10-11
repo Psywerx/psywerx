@@ -105,9 +105,17 @@ h1 {
 	text-shadow: 0 1px 0px white;
 }
 
-#projects,#team {
+#projects,#team,#irc,#irc-form {
 	margin-bottom: 10px;
 	padding-bottom: 10px;
+	padding-top:10px;
+	box-shadow: rgb(170, 170, 170) 0px 0px 8px 0px;
+}
+
+#content{
+	padding-top: 10px;
+	padding-bottom: 10px;
+	
 }
 
 #irc{

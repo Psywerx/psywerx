@@ -81,10 +81,10 @@ jQuery(document).ready(function(){
 		
 		$(element).hover(function(){
 			
-			$(element).animate({boxShadow: '0 0 8px #AAA'}, {duration: "fast", queue : false, easing : "swing"});
+			$(element).animate({boxShadow: '0 0 16px #AAA'}, {duration: "fast", queue : false, easing : "swing"});
 		}, function(){
 			
-			$(element).animate({boxShadow: '0 0 0px #AAA'}, {duration: "fast", queue : false, easing : "swing"});
+			$(element).animate({boxShadow: '0 0 8px #AAA'}, {duration: "fast", queue : false, easing : "swing"});
 		});		
 	}
 	setShadow("#projects");
