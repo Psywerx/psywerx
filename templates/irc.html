@@ -13,6 +13,10 @@
 	<div class="irc-event"><div class="irc-date">({{l.time}})</div><span class="irc-nick">{{l.nick}}</span> parted</div>
 	{% endif %} 
 	
+	{% if l.msg_type == 'Q' %}
+	<div class="irc-event"><div class="irc-date">({{l.time}})</div><span class="irc-nick">{{l.nick}}</span> quit: {{l.message}}</div>
+	{% endif %} 
+	
 	{% if l.msg_type == 'T' %}
 	<div class="irc-event"><div class="irc-date">({{l.time}})</div><span class="irc-nick">{{l.nick}}</span> changed the topic to {{l.message}}</div>
 	{% endif %} 
