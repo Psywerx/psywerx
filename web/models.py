@@ -19,7 +19,7 @@ MSG_TYPES = (
     ('T', 'Topic'),
     ('E', 'Error'),
     ('N', 'Nick'),
-    ('Q', 'Quit')
+    ('Q', 'Quit'),
     # slap ???
     ('O', 'Other'),
 )
