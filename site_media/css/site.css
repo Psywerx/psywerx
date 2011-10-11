@@ -114,12 +114,11 @@ h1 {
 
 #content{
 	padding-top: 10px;
-	padding-bottom: 10px;
-	
+	padding-bottom: 10px;	
 }
 
 #irc{
-	
+	font-family:monospace;
 	margin: 20px 0px;
 	padding-bottom: 10px;
 	
@@ -146,6 +145,7 @@ h1 {
 }
 .irc-nick{
 	display: inline-block;
+	font-weight: bold;
 
 }
 .irc-date{
