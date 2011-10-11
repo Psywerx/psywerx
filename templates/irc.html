@@ -6,34 +6,34 @@
 	
 
 	{% if l.msg_type == 'J' %}
-	<div class="irc-event"><div class="irc-date">({{l.time}})</div><span class="irc-nick">{{l.nick}}</span> joined</div>
+	<div class="irc-event"><div class="irc-date">({{l.time|date:"d.m.y @ H:i"}})</div><span class="irc-nick">{{l.nick}}</span> joined</div>
 	{% endif %}
 	
 	{% if l.msg_type == 'P' %}
-	<div class="irc-event"><div class="irc-date">({{l.time}})</div><span class="irc-nick">{{l.nick}}</span> parted</div>
+	<div class="irc-event"><div class="irc-date">({{l.time|date:"d.m.y @ H:i"}})</div><span class="irc-nick">{{l.nick}}</span> parted</div>
 	{% endif %} 
 	
 	{% if l.msg_type == 'Q' %}
-	<div class="irc-event"><div class="irc-date">({{l.time}})</div><span class="irc-nick">{{l.nick}}</span> quit: {{l.message}}</div>
+	<div class="irc-event"><div class="irc-date">({{l.time|date:"d.m.y @ H:i"}})</div><span class="irc-nick">{{l.nick}}</span> quit: {{l.message}}</div>
 	{% endif %} 
 	
 	{% if l.msg_type == 'T' %}
-	<div class="irc-event"><div class="irc-date">({{l.time}})</div><span class="irc-nick">{{l.nick}}</span> changed the topic to {{l.message}}</div>
+	<div class="irc-event"><div class="irc-date">({{l.time|date:"d.m.y @ H:i"}})</div><span class="irc-nick">{{l.nick}}</span> changed the topic to {{l.message}}</div>
 	{% endif %} 
 	
 	{% if l.msg_type == 'N' %}
-	<div class="irc-event"><div class="irc-date">({{l.time}})</div><span class="irc-nick">{{l.nick}}</span> is now known as {{l.message}}</div>
+	<div class="irc-event"><div class="irc-date">({{l.time|date:"d.m.y @ H:i"}})</div><span class="irc-nick">{{l.nick}}</span> is now known as {{l.message}}</div>
 	{% endif %} 
 
 	{% if l.msg_type == 'M' %}
 	
 		{% if l.msg_action %}
-		<div class="irc-action"><div class="irc-date">({{l.time}})</div><span class="irc-nick">{{l.nick}}</span> {{l.message}}</div>
+		<div class="irc-action"><div class="irc-date">({{l.time|date:"d.m.y @ H:i"}})</div><span class="irc-nick">{{l.nick}}</span> {{l.message}}</div>
 		
 		{% else %}
 		
 		<div class="irc-message">
-		<div class="irc-date">({{l.time}})</div><span class="irc-nick">{{l.nick}}</span>: {{l.message}}
+		<div class="irc-date">({{l.time|date:"d.m.y @ H:i"}})</div><span class="irc-nick">{{l.nick}}</span>: {{l.message}}
 		</div>
 		
 		{% endif %}
