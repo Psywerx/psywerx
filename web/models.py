@@ -19,6 +19,7 @@ MSG_TYPES = (
     ('T', 'Topic'),
     ('E', 'Error'),
     ('N', 'Nick'),
+    ('Q', 'Quit')
     # slap ???
     ('O', 'Other'),
 )
@@ -113,7 +114,7 @@ class Irc(models.Model):
                 self.message = s[2].split(' :',1)[1]
                 
             # process events:
-            elif s[1] in ('PART', 'JOIN', 'NICK'):
+            elif s[1] in ('PART', 'QUIT', 'JOIN', 'NICK'):
                 self.msg_type = s[1][:1]
                 self.message = s[2][1:]            
 
