@@ -150,10 +150,13 @@ h1 {
 }
 .irc-date{
 	
-	display:inline-block;
+	display:block;
+	float:left;
 	font-size: 12px;
-	clor: #000;
+	color: #000;
 	padding-right: 2px;
+	width: 200px;
+	text-align: right;
 }
 
 .irc-paginator{
