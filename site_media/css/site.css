@@ -152,6 +152,11 @@ h1 {
 	margin: 10px;
 }
 
+.irc-search input{
+	padding: 2px;
+
+}
+
 .irc-action {
 	font-style: italic;
 }
