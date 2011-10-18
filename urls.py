@@ -13,6 +13,6 @@ urlpatterns = patterns('',
     (r'^admin/', include(admin.site.urls)),
     (r'^irc/add', 'web.views.irc_bot_add'),
     (r'^irc/$', 'web.views.irc'),
-    (r'^irc/(\d+)/$', 'web.views.irc'),
+    (r'^irc/(\d+)/(\d+)/$', 'web.views.irc'),
     (r'^$', 'web.views.index'),
 )

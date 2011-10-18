@@ -3,8 +3,9 @@ from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import render_to_response
 from django.template import RequestContext
 from django.views.decorators.csrf import csrf_exempt
-from web.models import Project, Member, Irc
+from web.models import Project, Member, Irc, Link
 import hashlib
+import re
 
 
 def index(request):
@@ -27,7 +28,7 @@ def irc_bot_add(request):
 
 MAGIC_WORD = "6cf28bcedc3a628a4896817156e1ace5108ce6266a00fd556861d656"
 COOKIE_TOKEN = "2d9aa7a812f458a8d278d35272c6dc28b03357b7db38e553ea98a7f0"
-def irc(request, page=1):
+def irc(request, page=1, link_page=1):
     
     # Set the cookie
     if request.POST:
@@ -43,7 +44,11 @@ def irc(request, page=1):
         q = Irc.objects.all().order_by('time').reverse()
         p = Paginator(q, 100)
         
-        return render_to_response('irc.html', {'log': p.page(page),}, context_instance=RequestContext(request))
+        links = Link.objects.all().order_by('id').reverse()
+        links_p = Paginator(links, 10)
+        
+
+        return render_to_response('irc.html', {'log': p.page(page), 'links': links_p.page(link_page)}, context_instance=RequestContext(request))
     else:
         return render_to_response('irc_access.html', {'hello': "aaa",}, context_instance=RequestContext(request))
 
