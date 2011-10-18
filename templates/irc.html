@@ -2,6 +2,29 @@
 
 {% block content %}
 <div class="gird_12 inner" id="irc">
+	
+	<div class="grid_4" id="irc-links">
+	<div>
+	<h1>Latest links:</h1>
+	
+	{% for l in links.object_list %}
+	<div class="irc-links-content">
+	<a href="{{l.link}}" title="{{l.irc.nick}}: {{l.irc.message}}">{{ l.link|slice:":40" }}</a>
+	</div>
+	{% endfor %}	
+	
+	{% if links.has_next %}
+	<div class="irc-paginator"><a href="/irc/{{log.number}}/{{links.next_page_number}}">Older</a></div>
+	{% endif %}
+	
+	{% if links.has_previous %}
+	<div class="irc-paginator"><a href="/irc/{{log.number}}/{{links.previous_page_number}}">Newer</a></div>
+	{% endif %}
+	
+	</div>
+	</div>
+
+
 	{% for l in log.object_list %}
 	
 
@@ -43,11 +66,11 @@
 	<div class="clear:both"></div>
 	{% endfor %}
 	{% if log.has_next %}
-	<div class="irc-paginator"><a href="/irc/{{log.next_page_number}}">Older</a></div>
+	<div class="irc-paginator"><a href="/irc/{{log.next_page_number}}/{{links.number}}">Older</a></div>
 	{% endif %}
 	
 	{% if log.has_previous %}
-	<div class="irc-paginator"><a href="/irc/{{log.previous_page_number}}">Newer</a></div>
+	<div class="irc-paginator"><a href="/irc/{{log.previous_page_number}}/{{links.number}}">Newer</a></div>
 	{% endif %}
 </div>
 {% endblock %}

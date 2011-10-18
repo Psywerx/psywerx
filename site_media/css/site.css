@@ -105,7 +105,7 @@ h1 {
 	text-shadow: 0 1px 0px white;
 }
 
-#projects,#team,#irc,#irc-form {
+#projects,#team,#irc,#irc-form,#irc-links {
 	margin-bottom: 10px;
 	padding-bottom: 10px;
 	padding-top:10px;
@@ -122,6 +122,21 @@ h1 {
 	margin: 20px 0px;
 	padding-bottom: 10px;
 	
+}
+
+#irc div{
+	padding:0px 10px;
+}
+
+#irc-links{
+	
+	float:right;
+}
+
+.irc-links-content{
+	padding:0px !important;
+	overflow: hidden;
+	font-size: small;
 }
 
 #irc-form{
