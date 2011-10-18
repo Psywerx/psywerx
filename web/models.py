@@ -1,5 +1,6 @@
 from django.db import models
 from django.template.defaultfilters import default
+import re
 
 PROJECT_STATUS = (
     ('D', 'Development'),
@@ -80,7 +81,7 @@ class Irc(models.Model):
     
     def __unicode__(self):
         return str(self.time) + " " + self.raw 
-    
+        
     def parse(self, s):
         self.raw = s
         if s.startswith('ERROR'):
@@ -104,6 +105,7 @@ class Irc(models.Model):
                     self.msg_type = 'PM'                    
                 self.message = msg[1]
                 
+               
                 # check for ACTION:
                 if self.message.startswith(ACTION_START) and self.message.endswith(ACTION_END):
                     self.message = self.message[8:]
@@ -118,6 +120,22 @@ class Irc(models.Model):
                 self.msg_type = s[1][:1]
                 self.message = s[2][1:]            
 
-            self.save()            
+            self.save() 
+            
+            # Add links:
+            
+            links = re.findall('http[s]?://(?:[a-zA-Z]|[0-9]|[$-_@.&+]|[!*\(\),]|(?:%[0-9a-fA-F][0-9a-fA-F]))+', self.message)
+            for l in links:
+                L = Link()
+                L.link = l
+                L.irc = self
+                L.save()                   
 
         return s
+    
+class Link(models.Model):
+    link = models.CharField(max_length = 1000)
+    irc = models.ForeignKey(Irc)
+    
+    def __unicode__(self):
+        return self.link
