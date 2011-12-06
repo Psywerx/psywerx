@@ -1,7 +1,10 @@
 {% extends "layout.html" %}
 
 {% block content %}
-	<div class="irc-search"><input type="text" placeholder="Search" name="search"/><input type="button" name="search" value="Search"></div>
+<form method="post" action="/irc/">
+{% csrf_token %}
+	<div class="irc-search"><input type="text" placeholder="Search" name="term"/><input type="submit" name="search" value="Search" /></div>
+</form>
 <div class="gird_12 inner" id="irc">
 	
 	<div class="grid_4" id="irc-links">

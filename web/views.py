@@ -33,7 +33,7 @@ def irc(request, page=1, link_page=1):
     # Set the cookie
     if request.POST:
         
-        if hashlib.sha224(request.POST['word']).hexdigest() == MAGIC_WORD:
+        if request.POST.has_key('word') and hashlib.sha224(request.POST['word']).hexdigest() == MAGIC_WORD:
             r = HttpResponseRedirect('.')
             r.set_cookie("irctoken", COOKIE_TOKEN, 60*60*24*356*100)
             return r
@@ -41,7 +41,11 @@ def irc(request, page=1, link_page=1):
     irc_token = request.COOKIES.get("irctoken", "")
     
     if irc_token == COOKIE_TOKEN:
-        q = Irc.objects.all().order_by('time').reverse()
+        
+        if request.POST.has_key('term'):
+            q = Irc.objects.all().filter(message__icontains = request.POST['term']).order_by('time').reverse()
+        else:
+            q = Irc.objects.all().order_by('time').reverse()
         p = Paginator(q, 100)
         
         links = Link.objects.all().order_by('id').reverse()
