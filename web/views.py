@@ -21,8 +21,8 @@ def irc_bot_add(request):
     if request.POST:
         if request.POST["token"] == TOKEN:
             i = Irc()
-            i.parse(request.POST['raw'])
-            return HttpResponse("OK")
+            result = i.parse(request.POST['raw'])
+            return HttpResponse(result)
     return HttpResponse("NO")
     #return render_to_response('404.html', context_instance=RequestContext(request))
 

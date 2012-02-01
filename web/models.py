@@ -83,6 +83,7 @@ class Irc(models.Model):
         return str(self.time) + " " + self.raw 
         
     def parse(self, s):
+        response = 'OK'
         self.raw = s
         if s.startswith('ERROR'):
             self.msg_type = 'E'
@@ -126,12 +127,25 @@ class Irc(models.Model):
             
             links = re.findall('http[s]?://(?:[a-zA-Z]|[0-9]|[$-_@.&+]|[!*\(\),]|(?:%[0-9a-fA-F][0-9a-fA-F]))+', self.message)
             for l in links:
+                reposts = Link.objects.all().filter(link = l).order_by('id')
+                if len(reposts) > 0:
+                    R = Repost()
+                    R.irc = self
+                    R.irc_original = reposts[0].irc
+                    R.save()
+
+                    response = "REPOST :I don't want to be rude " + self.nick + ", but "
+                    if self.nick == reposts[0].irc.nick:
+                        response += "you"
+                    else:
+                        response += reposts[0].irc.nick
+                    response += " have already posted this link."
                 L = Link()
                 L.link = l
                 L.irc = self
-                L.save()                   
+                L.save()        
 
-        return s
+        return response
     
 class Link(models.Model):
     link = models.CharField(max_length = 1000)
@@ -139,3 +153,10 @@ class Link(models.Model):
     
     def __unicode__(self):
         return self.link
+    
+class Repost(models.Model):
+    irc = models.ForeignKey(Irc, related_name='repost_irc')
+    irc_original = models.ForeignKey(Irc, related_name='repost_irc_original')
+    def __unicode__(self):
+        return str(self.irc)
+    
