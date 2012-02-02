@@ -125,8 +125,9 @@ class Irc(models.Model):
             
             # Add links:
             
-            links = re.findall('http[s]?://(?:[a-zA-Z]|[0-9]|[$-_@.&+]|[!*\(\),]|(?:%[0-9a-fA-F][0-9a-fA-F]))+', self.message)
+            links = re.findall(r"(?i)\b((?:[a-z][\w-]+:(?:/{1,3}|[a-z0-9%])|www\d{0,3}[.]|[a-z0-9.\-]+[.][a-z]{2,4}/)(?:[^\s()<>]+|\(([^\s()<>]+|(\([^\s()<>]+\)))*\))+(?:\(([^\s()<>]+|(\([^\s()<>]+\)))*\)|[^\s'!()\[\]{};:'\".,<>?']))", self.message)
             for l in links:
+                l = l[0]
                 reposts = Link.objects.all().filter(link = l).order_by('id')
                 if len(reposts) > 0:
                     R = Repost()
