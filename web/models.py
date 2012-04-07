@@ -135,12 +135,7 @@ class Irc(models.Model):
                     R.irc_original = reposts[0].irc
                     R.save()
 
-                    response = "REPOST :I don't want to be rude " + self.nick + ", but "
-                    if self.nick == reposts[0].irc.nick:
-                        response += "you have"
-                    else:
-                        response += reposts[0].irc.nick + " has"
-                    response += " already posted this link."
+                    response = " ".join(["REPOST", self.nick, reposts[0].irc.nick, self.msg_type])
                 L = Link()
                 L.link = l
                 L.irc = self
