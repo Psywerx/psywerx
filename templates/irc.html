@@ -67,8 +67,8 @@
 	
 
 	{% endif %}
-	<div style="clear:both"></div>
 	{% endfor %}
+	<div style="clear:both"></div>
 	{% if log.has_next %}
 	<div class="irc-paginator"><a href="/irc/{{log.next_page_number}}/{{links.number}}">Older</a></div>
 	{% endif %}
