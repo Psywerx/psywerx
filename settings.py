@@ -2,8 +2,8 @@
 import os
 PROJECT_PATH = os.path.abspath(os.path.dirname(__file__))
 
-DEFAULT_TITLE = "Furrywerx.net"
-DEFAULT_FOOTER = "&copy; Furrywerx.net"
+DEFAULT_TITLE = "Psywerx.net"
+DEFAULT_FOOTER = "&copy; Psywerx.net"
 
 DEBUG = True
 TEMPLATE_DEBUG = DEBUG

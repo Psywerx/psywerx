@@ -1,4 +1,5 @@
 from django.db import models
+from django.db.models.aggregates import Count
 import re
 
 ACTION_START = u"\u0001" + "ACTION"
@@ -93,7 +94,7 @@ class Irc(models.Model):
     
     class Meta:
         db_table = 'web_irc'
-    
+        
 class Link(models.Model):
     link = models.CharField(max_length = 1000)
     irc = models.ForeignKey(Irc)
@@ -112,3 +113,8 @@ class Repost(models.Model):
     
     class Meta:
         db_table = 'web_repost'
+        
+class Karma(models.Model):
+    nick = models.CharField(max_length = 255)
+    time = models.DateTimeField(auto_now_add=True)
+    

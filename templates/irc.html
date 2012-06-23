@@ -26,6 +26,12 @@
 	{% endif %}
 	
 	</div>
+	<div>
+	<h1>Karma stats:</h1>
+	{% for k in karma %}
+	{{ k.nick }} {{k.karma}}<br />
+	{% endfor %}
+	</div>
 	</div>
 
 
