@@ -62,7 +62,7 @@ def irc(request, page=1, link_page=1):
         links = Link.objects.all().order_by('id').reverse()
         links_p = Paginator(links, 10)
 
-        karma = Karma.objects.all().annotate(karma = Count('nick')).order_by('-karma')[:5]
+        karma = Karma.objects.all().values('nick').annotate(karma=Count('nick')).order_by('-karma')[:5]
         
                 
         return render_to_response('irc.html', {'log': p.page(page), 'links': links_p.page(link_page), 'karma':karma}, context_instance=RequestContext(request))
