@@ -28,6 +28,15 @@
 	</div>
 	<div>
 	<h1>Karma stats:</h1>
+	<h2>This week:</h2>
+	{% for k in karma_week %}
+	{{ k.nick }} {{k.karma}}<br />
+	{% endfor %}
+	<h2>This month:</h2>
+	{% for k in karma_month %}
+	{{ k.nick }} {{k.karma}}<br />
+	{% endfor %}
+	<h2>All time:</h2>
 	{% for k in karma %}
 	{{ k.nick }} {{k.karma}}<br />
 	{% endfor %}

@@ -1,11 +1,12 @@
 from django.core.paginator import Paginator
+from django.db.models.aggregates import Count
 from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import render_to_response
 from django.template import RequestContext
 from django.views.decorators.csrf import csrf_exempt
 from irc.models import Irc, Link, Karma
+from datetime import date, timedelta
 import hashlib
-from django.db.models.aggregates import Count
 
 TOKEN = '16edde56d1801c65ec96a4d607a67d89'
 
@@ -62,9 +63,18 @@ def irc(request, page=1, link_page=1):
         links = Link.objects.all().order_by('id').reverse()
         links_p = Paginator(links, 10)
 
+        # all time:
         karma = Karma.objects.all().values('nick').annotate(karma=Count('nick')).order_by('-karma')[:5]
         
+        # this week:
+        week_start = date.today() - timedelta(days = date.today().weekday())
+        karma_week = Karma.objects.filter(time__gte = week_start).values('nick').annotate(karma=Count('nick')).order_by('-karma')[:5]
+
+        # this month:
+        month_start = date.today() - timedelta(days = date.today().day-1)
+        karma_month = Karma.objects.filter(time__gte = month_start).values('nick').annotate(karma=Count('nick')).order_by('-karma')[:5]
+
                 
-        return render_to_response('irc.html', {'log': p.page(page), 'links': links_p.page(link_page), 'karma':karma}, context_instance=RequestContext(request))
+        return render_to_response('irc.html', {'log': p.page(page), 'links': links_p.page(link_page), 'karma':karma, 'karma_week':karma_week, 'karma_month':karma_month}, context_instance=RequestContext(request))
     else:
         return render_to_response('irc_access.html', {'hello': "aaa",}, context_instance=RequestContext(request))
