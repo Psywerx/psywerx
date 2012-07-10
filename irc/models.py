@@ -83,14 +83,15 @@ class Irc(models.Model):
                     R.irc = self
                     R.irc_original = reposts[0].irc
                     R.save()
-
-                    response = " ".join(["REPOST", self.nick, reposts[0].irc.nick, self.msg_type])
+                    if not self.message.startswith('@'):
+                        response = " ".join(["REPOST", self.nick, reposts[0].irc.nick, self.msg_type])
                 L = Link()
                 L.link = l
                 L.irc = self
                 L.save()        
 
         return response
+
     
     class Meta:
         db_table = 'web_irc'
