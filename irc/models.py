@@ -83,7 +83,7 @@ class Irc(models.Model):
                     R.irc = self
                     R.irc_original = reposts[0].irc
                     R.save()
-                    if not self.message.startswith('@'):
+                    if not self.message.startswith('@') and not self.nick in ['_haibot_']:
                         response = " ".join(["REPOST", self.nick, reposts[0].irc.nick, self.msg_type])
                 L = Link()
                 L.link = l
