@@ -7,6 +7,7 @@ from django.views.decorators.csrf import csrf_exempt
 from irc.models import Irc, Link, Karma
 from datetime import date, timedelta
 import hashlib
+import json
 
 TOKEN = '16edde56d1801c65ec96a4d607a67d89'
 
@@ -34,7 +35,10 @@ def karma_add(request):
 def karma_nick(request):
     if request.POST:
         if request.POST["token"] == TOKEN:
-            karma = len(Karma.objects.filter(nick = request.POST['nick']))
+            if "nick" in request.POST:
+                karma = len(Karma.objects.filter(nick = request.POST['nick']))
+            else:
+                karma = json.dumps([o for o in Karma.objects.all().values('nick').annotate(karma=Count('nick')).order_by('-karma')[:5]])
             return HttpResponse(karma)
     return HttpResponse("NO")
 
