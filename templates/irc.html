@@ -5,10 +5,13 @@
 {% csrf_token %}
 	<div class="irc-search"><input type="text" placeholder="Search" name="term"/><input type="submit" name="search" value="Search" /></div>
 </form>
+
 <div class="gird_12 inner" id="irc">
 	
 	<div class="grid_4" id="irc-links">
 	<div>
+	<h1>Database dump</h1>
+	<a href="/irc/dump">Take a dump.</a>
 	<h1>Latest links:</h1>
 	
 	{% for l in links.object_list %}
