@@ -45,7 +45,7 @@ def karma_nick(request):
 def dump(request):
     out = [{"message": a.message, "time": str(a.time), "nick": a.nick, "name": a.name, "address": a.address, \
             "msg_type": a.msg_type, "msg_action": a.msg_action, "raw":a.raw} for a in Irc.objects.all()]
-    return HttpResponse(json.dumps(out))
+    return HttpResponse(json.dumps(out), mimetype="application/json")
 
 MAGIC_WORD = "6cf28bcedc3a628a4896817156e1ace5108ce6266a00fd556861d656"
 COOKIE_TOKEN = "2d9aa7a812f458a8d278d35272c6dc28b03357b7db38e553ea98a7f0"
