@@ -28,7 +28,6 @@ def karma_add(request):
             k = Karma()
             k.nick = request.POST['nick']
             k.channel = request.POST['channel']
-            print k.nick, k.channel
             k.save()
             return HttpResponse("OK")
     return HttpResponse("NO")
