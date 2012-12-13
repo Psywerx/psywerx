@@ -16,7 +16,7 @@ def irc_bot_add(request):
     if request.POST:
         if request.POST["token"] == TOKEN:
             i = Irc()
-            result = i.parse(request.POST['raw'])
+            result = i.parse(request.POST['raw'], request.POST['channel'])
             return HttpResponse(result)
     return HttpResponse("NO")
     #return render_to_response('404.html', context_instance=RequestContext(request))
@@ -27,6 +27,8 @@ def karma_add(request):
         if request.POST["token"] == TOKEN:
             k = Karma()
             k.nick = request.POST['nick']
+            k.channel = request.POST['channel']
+            print k.nick, k.channel
             k.save()
             return HttpResponse("OK")
     return HttpResponse("NO")
@@ -49,6 +51,7 @@ def dump(request):
 
 MAGIC_WORD = "6cf28bcedc3a628a4896817156e1ace5108ce6266a00fd556861d656"
 COOKIE_TOKEN = "2d9aa7a812f458a8d278d35272c6dc28b03357b7db38e553ea98a7f0"
+CHANNEL = "#psywerx"
 def irc(request, page=1, link_page=1):
     
     # Set the cookie
@@ -64,24 +67,25 @@ def irc(request, page=1, link_page=1):
     if irc_token == COOKIE_TOKEN:
         
         if request.POST.has_key('term'):
-            q = Irc.objects.all().filter(message__icontains = request.POST['term']).order_by('time').reverse()
+            q = Irc.objects.all().filter(message__icontains = request.POST['term'], channel__iexact = CHANNEL).order_by('time').reverse()
         else:
-            q = Irc.objects.all().order_by('time').reverse()
+            q = Irc.objects.all().filter(channel__iexact = CHANNEL).order_by('time').reverse()
+        
         p = Paginator(q, 100)
         
-        links = Link.objects.all().order_by('id').reverse()
+        links = Link.objects.all().filter(irc__channel=CHANNEL).order_by('id').reverse()
         links_p = Paginator(links, 10)
 
         # all time:
-        karma = Karma.objects.all().values('nick').annotate(karma=Count('nick')).order_by('-karma')[:5]
+        karma = Karma.objects.all().filter(channel__iexact = CHANNEL).values('nick').annotate(karma=Count('nick')).order_by('-karma')[:5]
         
         # this week:
         week_start = date.today() - timedelta(days = date.today().weekday())
-        karma_week = Karma.objects.filter(time__gte = week_start).values('nick').annotate(karma=Count('nick')).order_by('-karma')[:5]
+        karma_week = Karma.objects.filter(time__gte = week_start, channel__iexact = CHANNEL).values('nick').annotate(karma=Count('nick')).order_by('-karma')[:5]
 
         # this month:
         month_start = date.today() - timedelta(days = date.today().day-1)
-        karma_month = Karma.objects.filter(time__gte = month_start).values('nick').annotate(karma=Count('nick')).order_by('-karma')[:5]
+        karma_month = Karma.objects.filter(time__gte = month_start, channel__iexact = CHANNEL).values('nick').annotate(karma=Count('nick')).order_by('-karma')[:5]
 
                 
         return render_to_response('irc.html', {'log': p.page(page), 'links': links_p.page(link_page), 'karma':karma, 'karma_week':karma_week, 'karma_month':karma_month}, context_instance=RequestContext(request))

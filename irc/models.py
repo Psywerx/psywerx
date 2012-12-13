@@ -27,11 +27,12 @@ class Irc(models.Model):
     msg_type = models.CharField(max_length = 3, choices = MSG_TYPES)
     msg_action = models.BooleanField(default = False)
     message = models.TextField(blank = True)
+    channel = models.CharField(max_length = 255, blank = True)
     
     def __unicode__(self):
         return str(self.time) + " " + self.raw 
         
-    def parse(self, s):
+    def parse(self, s, channel):
         response = 'OK'
         self.raw = s
         if s.startswith('ERROR'):
@@ -44,6 +45,7 @@ class Irc(models.Model):
             self.address = user[1]
             user = user[0].split('!')
             self.nick = user[0][1:]
+            self.channel = channel
             self.name = user[1]
 
             # process messages
@@ -77,7 +79,7 @@ class Irc(models.Model):
             links = re.findall(r"(?i)\b((?:[a-z][\w-]+:(?:/{1,3}|[a-z0-9%])|www\d{0,3}[.]|[a-z0-9.\-]+[.][a-z]{2,4}/)(?:[^\s()<>]+|\(([^\s()<>]+|(\([^\s()<>]+\)))*\))+(?:\(([^\s()<>]+|(\([^\s()<>]+\)))*\)|[^\s'!()\[\]{};:'\".,<>?']))", self.message)
             for l in links:
                 l = l[0]
-                reposts = Link.objects.all().filter(link = l).order_by('id')
+                reposts = Link.objects.all().filter(link = l, irc__channel = channel).order_by('id')
                 if len(reposts) > 0:
                     R = Repost()
                     R.irc = self
@@ -117,5 +119,6 @@ class Repost(models.Model):
         
 class Karma(models.Model):
     nick = models.CharField(max_length = 255)
+    channel = models.CharField(max_length = 255)
     time = models.DateTimeField(auto_now_add=True)
     
