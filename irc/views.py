@@ -37,10 +37,13 @@ def karma_add(request):
 def karma_nick(request):
     if request.POST:
         if request.POST["token"] == TOKEN:
+            print request.POST['channel']
             if "nick" in request.POST:
-                karma = len(Karma.objects.filter(nick = request.POST['nick'], channel = request.POST['channel']))
+                karma = len(Karma.objects.filter(nick = request.POST['nick'], channel__iexact = request.POST['channel']))
             else:
-                karma = json.dumps([o for o in Karma.objects.all().filter(channel = request.POST['channel']).values('nick').annotate(karma=Count('nick')).order_by('-karma')[:5]])
+                karma = json.dumps([o for o in Karma.objects.all().filter(channel__iexact = request.POST['channel']).values('nick').annotate(karma=Count('nick')).order_by('-karma')[:5]])
+            
+            print karma
             return HttpResponse(karma)
     return HttpResponse("NO")
 
