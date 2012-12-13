@@ -38,9 +38,9 @@ def karma_nick(request):
     if request.POST:
         if request.POST["token"] == TOKEN:
             if "nick" in request.POST:
-                karma = len(Karma.objects.filter(nick = request.POST['nick']))
+                karma = len(Karma.objects.filter(nick = request.POST['nick'], channel = request.POST['channel']))
             else:
-                karma = json.dumps([o for o in Karma.objects.all().values('nick').annotate(karma=Count('nick')).order_by('-karma')[:5]])
+                karma = json.dumps([o for o in Karma.objects.all().filter(channel = request.POST['channel']).values('nick').annotate(karma=Count('nick')).order_by('-karma')[:5]])
             return HttpResponse(karma)
     return HttpResponse("NO")
 
