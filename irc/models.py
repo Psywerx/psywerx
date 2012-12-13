@@ -1,5 +1,4 @@
 from django.db import models
-from django.db.models.aggregates import Count
 import re
 
 ACTION_START = u"\u0001" + "ACTION"
