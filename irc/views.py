@@ -40,6 +40,7 @@ def karma_nick(request):
                 nick = request.POST['nick'][:4]
                 karmaQuery = Karma.objects.filter(nick__startswith=nick, channel__iexact = request.POST['channel'])
                 nicks = set(k.nick for k in karmaQuery)
+                nicks.remove(request.POST['nick'])
                 combined_karma = len(karmaQuery)
                 karma = len(Karma.objects.filter(nick = request.POST['nick'], channel__iexact = request.POST['channel']))
                 if combined_karma > karma:
