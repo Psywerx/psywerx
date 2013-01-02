@@ -5,7 +5,7 @@ from django.shortcuts import render_to_response
 from django.template import RequestContext
 from django.views.decorators.csrf import csrf_exempt
 from irc.models import Irc, Link, Karma
-from datetime import date, timedelta
+from datetime import date, timedelta, datetime
 import hashlib
 import json
 
@@ -38,15 +38,15 @@ def karma_nick(request):
         if request.POST["token"] == TOKEN:
             if "nick" in request.POST:
                 nick = request.POST['nick'][:4]
-                karmaQuery = Karma.objects.filter(nick__startswith=nick, channel__iexact = request.POST['channel'])
+                karmaQuery = Karma.objects.filter(nick__startswith=nick, channel__iexact = request.POST['channel'], time__year = datetime.now().year)
                 nicks = set(k.nick for k in karmaQuery)
                 nicks.remove(request.POST['nick'])
                 combined_karma = len(karmaQuery)
-                karma = len(Karma.objects.filter(nick = request.POST['nick'], channel__iexact = request.POST['channel']))
+                karma = len(Karma.objects.filter(nick = request.POST['nick'], channel__iexact = request.POST['channel'], time__year = datetime.now().year))
                 if combined_karma > karma:
                     karma = ("%s (or %s with his other nicknames - " + ", ".join(nicks) + ")") % (karma, combined_karma)
             else:
-                karma = json.dumps([o for o in Karma.objects.all().filter(channel__iexact = request.POST['channel']).values('nick').annotate(karma=Count('nick')).order_by('-karma')[:5]])
+                karma = json.dumps([o for o in Karma.objects.all().filter(channel__iexact = request.POST['channel'], time__year = datetime.now().year).values('nick').annotate(karma=Count('nick')).order_by('-karma')[:5]])
             
             return HttpResponse(karma)
     return HttpResponse("NO")
@@ -84,15 +84,15 @@ def irc(request, page=1, link_page=1):
         links_p = Paginator(links, 10)
 
         # all time:
-        karma = Karma.objects.all().filter(channel__iexact = CHANNEL).values('nick').annotate(karma=Count('nick')).order_by('-karma')[:5]
+        karma = Karma.objects.all().filter(channel__iexact = CHANNEL,time__year = datetime.now().year).values('nick').annotate(karma=Count('nick')).order_by('-karma')[:5]
         
         # this week:
         week_start = date.today() - timedelta(days = date.today().weekday())
-        karma_week = Karma.objects.filter(time__gte = week_start, channel__iexact = CHANNEL).values('nick').annotate(karma=Count('nick')).order_by('-karma')[:5]
+        karma_week = Karma.objects.filter(time__gte = week_start, channel__iexact = CHANNEL, time__year = datetime.now().year).values('nick').annotate(karma=Count('nick')).order_by('-karma')[:5]
 
         # this month:
         month_start = date.today() - timedelta(days = date.today().day-1)
-        karma_month = Karma.objects.filter(time__gte = month_start, channel__iexact = CHANNEL).values('nick').annotate(karma=Count('nick')).order_by('-karma')[:5]
+        karma_month = Karma.objects.filter(time__gte = month_start, channel__iexact = CHANNEL, time__year = datetime.now().year).values('nick').annotate(karma=Count('nick')).order_by('-karma')[:5]
 
                 
         return render_to_response('irc.html', {'log': p.page(page), 'links': links_p.page(link_page), 'karma':karma, 'karma_week':karma_week, 'karma_month':karma_month}, context_instance=RequestContext(request))
