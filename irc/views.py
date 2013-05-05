@@ -50,14 +50,15 @@ def karma_nick(request):
                 d = defaultdict(int)
                 dn = {}
                 for o in Karma.objects.all().filter(channel__iexact = request.POST['channel'], time__year = datetime.now().year).values('nick').annotate(karma=Count('nick')).order_by('-karma'):
-                    if o['karma'] > d[o['name'][:4]]:
-                        dn[o['name'][:4]] = o['name']
-                    d[o['name'][:4]] += o['karma']
+                    if o['karma'] > d[o['nick'][:4]]:
+                        dn[o['nick'][:4]] = o['nick']
+                    d[o['nick'][:4]] += o['karma']
+                    
                 import operator
                 sd = sorted(d.iteritems(), key=operator.itemgetter(1), reverse=True)
                 k = []
                 for s in sd:
-                    k.append({'name': dn[s[0]], 'karma': dn[s[1]]})
+                    k.append({'nick': dn[s[0]], 'karma': s[1]})
                 
                 karma = json.dumps(k)
             
