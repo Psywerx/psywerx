@@ -6,6 +6,7 @@ from django.template import RequestContext
 from django.views.decorators.csrf import csrf_exempt
 from irc.models import Irc, Link, Karma
 from datetime import date, timedelta, datetime
+from collections import defaultdict
 import hashlib
 import json
 
@@ -46,7 +47,19 @@ def karma_nick(request):
                 if combined_karma > karma:
                     karma = ("%s (or %s with his other nicknames - " + ", ".join(nicks) + ")") % (karma, combined_karma)
             else:
-                karma = json.dumps([o for o in Karma.objects.all().filter(channel__iexact = request.POST['channel'], time__year = datetime.now().year).values('nick').annotate(karma=Count('nick')).order_by('-karma')[:5]])
+                d = defaultdict(int)
+                dn = {}
+                for o in Karma.objects.all().filter(channel__iexact = request.POST['channel'], time__year = datetime.now().year).values('nick').annotate(karma=Count('nick')).order_by('-karma'):
+                    if o['karma'] > d[o['name'][:4]]:
+                        dn[o['name'][:4]] = o['name']
+                    d[o['name'][:4]] += o['karma']
+                import operator
+                sd = sorted(d.iteritems(), key=operator.itemgetter(1), reverse=True)
+                k = []
+                for s in sd:
+                    k.append({'name': dn[s[0]], 'karma': dn[s[1]]})
+                
+                karma = json.dumps(k)
             
             return HttpResponse(karma)
     return HttpResponse("NO")
