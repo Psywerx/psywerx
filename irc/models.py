@@ -120,4 +120,35 @@ class Karma(models.Model):
     nick = models.CharField(max_length = 255)
     channel = models.CharField(max_length = 255)
     time = models.DateTimeField(auto_now_add=True)
+
+class GroupMembers(models.Model):
+    nick = models.CharField(max_length = 255)
+    group = models.CharField(max_length = 255)
+    offline = models.BooleanField(default = False)
+    channel = models.CharField(max_length = 255)
     
+    @staticmethod
+    def join(nick, group, offline, channel):
+        member, _ = GroupMembers.objects.get_or_create(channel = channel, group = group, nick = nick)
+        member.offline = offline
+        member.save()
+    
+    @staticmethod
+    def leave(nick, group, channel):
+        GroupMembers.objects.filter(channel__iexact = channel, group__iexact = group, nick__iexact = nick).delete()
+    
+    @staticmethod
+    def leaveAll(nick, channel):
+        GroupMembers.objects.filter(channel__iexact = channel, nick__iexact = nick).delete()
+    
+    @staticmethod
+    def mention(group, channel):
+        members = GroupMembers.objects.filter(channel__iexact = channel, group__iexact = group)
+        print members
+        return members
+    
+    def __unicode__(self):
+        print self.offline
+        return self.nick + " " + self.group + " " + self.channel + " "
+    
+

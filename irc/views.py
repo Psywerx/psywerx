@@ -4,7 +4,7 @@ from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import render_to_response
 from django.template import RequestContext
 from django.views.decorators.csrf import csrf_exempt
-from irc.models import Irc, Link, Karma
+from irc.models import Irc, Link, Karma, GroupMembers
 from datetime import date, timedelta, datetime
 from collections import defaultdict
 import hashlib
@@ -112,3 +112,39 @@ def irc(request, page=1, link_page=1):
         return render_to_response('irc.html', {'log': p.page(page), 'links': links_p.page(link_page), 'karma':karma, 'karma_week':karma_week, 'karma_month':karma_month}, context_instance=RequestContext(request))
     else:
         return render_to_response('irc_access.html', {'hello': "aaa",}, context_instance=RequestContext(request))
+
+@csrf_exempt   
+def join(request):
+    if request.POST:
+        if request.POST["token"] != TOKEN:
+            return HttpResponse("NO")
+        GroupMembers.join(request.POST['nick'], request.POST['group'], request.POST['offline'], request.POST['channel'])
+        return HttpResponse(json.dumps("ok"), mimetype="application/json")
+    return HttpResponse("NO")
+
+@csrf_exempt
+def leave(request):
+    if request.POST:
+        if request.POST["token"] != TOKEN:
+            return HttpResponse("NO")
+        GroupMembers.leave(request.POST['nick'], request.POST['group'], request.POST['channel'])
+        return HttpResponse(json.dumps("ok"), mimetype="application/json")
+
+@csrf_exempt
+def leaveAll(request):
+    if request.POST:
+        if request.POST["token"] != TOKEN:
+            return HttpResponse("NO")
+        GroupMembers.leaveAll(request.POST['nick'], request.POST['channel'])
+        return HttpResponse(json.dumps("ok"), mimetype="application/json")
+    
+@csrf_exempt
+def mention(request):
+    if request.POST:
+        if request.POST["token"] != TOKEN:
+            return HttpResponse("NO")
+        members = GroupMembers.mention(request.POST['group'], request.POST['channel'])
+        out = [(m.nick, m.channel, m.offline) for m in members];
+        return HttpResponse(json.dumps(out), mimetype="application/json")
+
+
