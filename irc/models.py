@@ -129,9 +129,19 @@ class GroupMembers(models.Model):
     
     @staticmethod
     def join(nick, group, offline, channel):
-        member, _ = GroupMembers.objects.get_or_create(channel = channel, group = group, nick = nick)
-        member.offline = offline
-        member.save()
+        members = GroupMembers.objects.filter(channel__iexact = channel, group__iexact = group, nick__iexact = nick)
+        offline = 1 if offline == "True" else 0
+        if len(members) > 0:
+            members[0].nick = nick # maybe the case changed
+            members[0].offline = 1 if offline else 0
+            members[0].save()
+        else:
+            member = GroupMembers()
+            member.nick = nick
+            member.group = group
+            member.channel = channel
+            member.offline = 1 if offline else 0
+            member.save()
     
     @staticmethod
     def leave(nick, group, channel):
@@ -144,11 +154,9 @@ class GroupMembers(models.Model):
     @staticmethod
     def mention(group, channel):
         members = GroupMembers.objects.filter(channel__iexact = channel, group__iexact = group)
-        print members
         return members
     
     def __unicode__(self):
-        print self.offline
         return self.nick + " " + self.group + " " + self.channel + " "
     
 
