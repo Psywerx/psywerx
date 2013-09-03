@@ -139,6 +139,14 @@ def leaveAll(request):
         return HttpResponse(json.dumps("ok"), mimetype="application/json")
     
 @csrf_exempt
+def groups(request):
+    if request.POST:
+        if request.POST["token"] != TOKEN:
+            return HttpResponse("NO")
+        ret = GroupMembers.groups(request.POST['channel'])
+        return HttpResponse(json.dumps(', '.join(ret)), mimetype="application/json")
+    
+@csrf_exempt
 def mention(request):
     if request.POST:
         if request.POST["token"] != TOKEN:

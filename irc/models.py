@@ -1,5 +1,6 @@
 from django.db import models
 import re
+from django.db.models.aggregates import Count
 
 ACTION_START = u"\u0001" + "ACTION"
 ACTION_END   = u"\u0001"
@@ -155,6 +156,11 @@ class GroupMembers(models.Model):
     def mention(group, channel):
         members = GroupMembers.objects.filter(channel__iexact = channel, group__iexact = group)
         return members
+    
+    @staticmethod
+    def groups(channel):
+        members = GroupMembers.objects.values('group').filter(channel__iexact = channel).order_by().annotate(Count('group')).order_by('group__count').reverse()
+        return map(lambda x: "{0} ({1})".format(x['group'], x['group__count']), members)
     
     def __unicode__(self):
         return self.nick + " " + self.group + " " + self.channel + " "
