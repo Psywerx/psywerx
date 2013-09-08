@@ -162,6 +162,11 @@ class GroupMembers(models.Model):
         members = GroupMembers.objects.values('group').filter(channel__iexact = channel).order_by().annotate(Count('group')).order_by('group__count').reverse()
         return map(lambda x: "{0} ({1})".format(x['group'], x['group__count']), members)
     
+    @staticmethod
+    def mygroups(channel, nick):
+        members = GroupMembers.objects.values('group', 'offline').filter(channel__iexact = channel, nick__iexact = nick)
+        return map(lambda x: x['group'] + (" (o)" if x['offline'] else ""), members)
+    
     def __unicode__(self):
         return self.nick + " " + self.group + " " + self.channel + " "
     
