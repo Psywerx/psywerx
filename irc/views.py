@@ -60,7 +60,7 @@ def karma_nick(request):
                 for s in sd:
                     k.append({'nick': dn[s[0]], 'karma': s[1]})
                 
-                karma = json.dumps(k[:6])
+                karma = json.dumps(k)
             
             return HttpResponse(karma)
     return HttpResponse("NO")
