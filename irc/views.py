@@ -91,7 +91,7 @@ def irc(request, page=1, link_page=1):
             q = Irc.objects.all().filter(message__icontains = request.POST['term'], channel__iexact = CHANNEL).order_by('time').reverse()
         else:
             from django.db.models import Q
-            q = Irc.objects.all().filter(Q(channel__iexact = CHANNEL | msg_type = 'Q')).order_by('time').reverse()
+            q = Irc.objects.filter(Q(channel__iexact = CHANNEL) | Q(msg_type = 'Q')).order_by('time').reverse()
 
         p = Paginator(q, 100)
 
