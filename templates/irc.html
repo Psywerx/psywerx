@@ -1,98 +1,103 @@
 {% extends "layout.html" %}
 
 {% block content %}
+<div class="row">
+<div class="col-md-12">
 <form method="post" action="/irc/">
-{% csrf_token %}
-	<div class="irc-search"><input type="text" placeholder="Search" name="term"/><input type="submit" name="search" value="Search" /></div>
+  {% csrf_token %}
+  <div class="input-group">
+    <input type="text" class="form-control" placeholder="Search" name="term">
+    <span class="input-group-btn">
+      <button type="submit" class="btn btn-default" name="search" value="Search">Go!</button>
+    </span>
+  </div>
 </form>
+</div>
+<div class="col-md-8">
+{% for l in log.object_list %}
 
-<div class="gird_12 inner" id="irc">
-	
-	<div class="grid_4" id="irc-links">
+
+{% if l.msg_type == 'J' %}
+<div class="irc-event"><div class="irc-date">({{l.time|date:"d.m.y @ H:i"}})</div><span class="irc-nick">{{l.nick}}</span> joined</div>
+{% endif %}
+
+{% if l.msg_type == 'P' %}
+<div class="irc-event"><div class="irc-date">({{l.time|date:"d.m.y @ H:i"}})</div><span class="irc-nick">{{l.nick}}</span> parted</div>
+{% endif %}
+
+{% if l.msg_type == 'Q' %}
+<div class="irc-event"><div class="irc-date">({{l.time|date:"d.m.y @ H:i"}})</div><span class="irc-nick">{{l.nick}}</span> quit: {{l.message}}</div>
+{% endif %}
+
+{% if l.msg_type == 'T' %}
+<div class="irc-event"><div class="irc-date">({{l.time|date:"d.m.y @ H:i"}})</div><span class="irc-nick">{{l.nick}}</span> changed the topic to {{l.message}}</div>
+{% endif %}
+
+{% if l.msg_type == 'N' %}
+<div class="irc-event"><div class="irc-date">({{l.time|date:"d.m.y @ H:i"}})</div><span class="irc-nick">{{l.nick}}</span> is now known as {{l.message}}</div>
+{% endif %}
+
+{% if l.msg_type == 'M' %}
+
+	{% if l.msg_action %}
+	<div class="irc-action"><div class="irc-date">({{l.time|date:"d.m.y @ H:i"}})</div><span class="irc-nick">{{l.nick}}</span> {{l.message}}</div>
+
+	{% else %}
+
+	<div class="irc-message">
+	<div class="irc-date">({{l.time|date:"d.m.y @ H:i"}})</div><span class="irc-nick">{{l.nick}}</span>: {{l.message}}
+	</div>
+
+	{% endif %}
+
+
+{% endif %}
+{% endfor %}
+<div style="clear:both"></div>
+{% if log.has_next %}
+<div class="irc-paginator"><a href="/irc/{{log.next_page_number}}/{{links.number}}">Older</a></div>
+{% endif %}
+
+{% if log.has_previous %}
+<div class="irc-paginator"><a href="/irc/{{log.previous_page_number}}/{{links.number}}">Newer</a></div>
+{% endif %}
+</div>
+<div class="col-md-4">
 	<div>
-	<h1>Database dump</h1>
-	<a href="/irc/dump">Take a dump.</a>
-	<h1>Latest links:</h1>
-	
+	<h3>Latest links:</h3>
+
 	{% for l in links.object_list %}
 	<div class="irc-links-content">
 	<a href="{{l.link}}" title="{{l.irc.nick}}: {{l.irc.message}}">{{ l.link|slice:":40" }}</a>
 	</div>
-	{% endfor %}	
-	
+	{% endfor %}
+
 	{% if links.has_next %}
 	<div class="irc-paginator"><a href="/irc/{{log.number}}/{{links.next_page_number}}">Older</a></div>
 	{% endif %}
-	
+
 	{% if links.has_previous %}
 	<div class="irc-paginator"><a href="/irc/{{log.number}}/{{links.previous_page_number}}">Newer</a></div>
 	{% endif %}
-	
+
 	</div>
 	<div>
-	<h1>Karma stats:</h1>
-	<h2>This week:</h2>
+	<h3>Karma stats:</h3>
+	<h4>This week:</h4>
 	{% for k in karma_week %}
 	{{ k.nick }} {{k.karma}}<br />
 	{% endfor %}
-	<h2>This month:</h2>
+	<h4>This month:</h4>
 	{% for k in karma_month %}
 	{{ k.nick }} {{k.karma}}<br />
 	{% endfor %}
-	<h2>All time:</h2>
+	<h4>All time:</h4>
 	{% for k in karma %}
 	{{ k.nick }} {{k.karma}}<br />
 	{% endfor %}
 	</div>
-	</div>
-
-
-	{% for l in log.object_list %}
-	
-
-	{% if l.msg_type == 'J' %}
-	<div class="irc-event"><div class="irc-date">({{l.time|date:"d.m.y @ H:i"}})</div><span class="irc-nick">{{l.nick}}</span> joined</div>
-	{% endif %}
-	
-	{% if l.msg_type == 'P' %}
-	<div class="irc-event"><div class="irc-date">({{l.time|date:"d.m.y @ H:i"}})</div><span class="irc-nick">{{l.nick}}</span> parted</div>
-	{% endif %} 
-	
-	{% if l.msg_type == 'Q' %}
-	<div class="irc-event"><div class="irc-date">({{l.time|date:"d.m.y @ H:i"}})</div><span class="irc-nick">{{l.nick}}</span> quit: {{l.message}}</div>
-	{% endif %} 
-	
-	{% if l.msg_type == 'T' %}
-	<div class="irc-event"><div class="irc-date">({{l.time|date:"d.m.y @ H:i"}})</div><span class="irc-nick">{{l.nick}}</span> changed the topic to {{l.message}}</div>
-	{% endif %} 
-	
-	{% if l.msg_type == 'N' %}
-	<div class="irc-event"><div class="irc-date">({{l.time|date:"d.m.y @ H:i"}})</div><span class="irc-nick">{{l.nick}}</span> is now known as {{l.message}}</div>
-	{% endif %} 
-
-	{% if l.msg_type == 'M' %}
-	
-		{% if l.msg_action %}
-		<div class="irc-action"><div class="irc-date">({{l.time|date:"d.m.y @ H:i"}})</div><span class="irc-nick">{{l.nick}}</span> {{l.message}}</div>
-		
-		{% else %}
-		
-		<div class="irc-message">
-		<div class="irc-date">({{l.time|date:"d.m.y @ H:i"}})</div><span class="irc-nick">{{l.nick}}</span>: {{l.message}}
-		</div>
-		
-		{% endif %}
-	
-
-	{% endif %}
-	{% endfor %}
-	<div style="clear:both"></div>
-	{% if log.has_next %}
-	<div class="irc-paginator"><a href="/irc/{{log.next_page_number}}/{{links.number}}">Older</a></div>
-	{% endif %}
-	
-	{% if log.has_previous %}
-	<div class="irc-paginator"><a href="/irc/{{log.previous_page_number}}/{{links.number}}">Newer</a></div>
-	{% endif %}
+	<h3>Database dump</h3>
+	<a href="/irc/dump">Dump</a>
+</div>
 </div>
 {% endblock %}

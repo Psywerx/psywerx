@@ -1,54 +1,9 @@
 {% extends "layout.html" %}
 
 {% block content %}
-<div class="grid_12">
-{{settings.description|safe}}
+<div class="jumbotron">
+  <p>
+    {{settings.description|safe}}
+  </p>
 </div>
-<!--
-<div class="grid_8" id="projects">
-<div class="inner">
-<h1 id="projects-h">Projects:</h1>
-<ul>
-	{% for p in projects %}
-	<li>
-	<a href="{{p.link}}">{{p.name}}</a> -
-	<span class="description">{{p.description}}</span>
-    <div class="technology">
-    {% if p.framework.all %}
-    <h2>Frameworks:</h2>
-    <ul>
-    {% for t in p.framework.all %}
-    <li>{{ t.name }} ({{t.language}})</li>
-    {% endfor %}
-    
-    </ul>
-    {% endif %}
-    </div>
-	</li>
-	{% endfor %}
-</ul>
-</div>
-</div>
-<div class="grid_4" id="team">
-<div class="inner">
-<h1 id="team-h">The team:</h1>
-<ul>
-    {% for m in members %}
-    <li>
-    {{m.name}} - <span class = "description">{{m.description}}</span>
-    <div class="technology">
-    <h2>Social:</h2>
-    {% if m.website %}<a href="{{m.website}}">Website</a>{% endif %}
-    {% if m.twitter %}<a href="{{m.twitter}}">Twitter</a>{% endif %}
-    {% if m.facebook %}<a href="{{m.facebook}}">Facebook</a>{% endif %}
-    {% if m.github %}<a href="{{m.github}}">Github</a>{% endif %}
-    {% if m.linkedin %}<a href="{{m.linkedin}}">Linkedin</a>{% endif %}
-    {% if m.googleprofile %}<a href="{{m.googleprofile}}">Google</a>{% endif %}
-    </div>
-    </li>
-    {% endfor %}
-</ul>
-</div>
-</div>
---!>
 {% endblock %}
