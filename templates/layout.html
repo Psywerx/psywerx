@@ -12,17 +12,17 @@
 <body>
   <div class="container">
     <div class="row">
-      <div class="col-md-12 page-header">
+      <div class="col-sm-12 page-header">
           <h1>{% block title-header %}{{SITE_TITLE}}{% endblock %}</h1>
   <!--
   <div title="Vesele praznike" style="z-index:666;position:absolute;top:10px; right:20px;background-image:url(/site_media/img/santa.gif);width:87px;height:87px;"></div>
   -->
       </div>
-      <div class="col-md-12">
+      <div class="col-sm-12">
         {% block content %}
         {% endblock %}
       </div>
-      <div class="col-md-12 text-center">
+      <div class="col-sm-12 text-center">
         {% block footer %}{{SITE_FOOTER|safe}}{% endblock %}
       </div>
     </div>

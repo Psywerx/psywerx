@@ -2,7 +2,7 @@
 
 {% block content %}
 <div class="row">
-<div class="col-md-12">
+<div class="col-sm-12">
 <form method="post" action="/irc/">
   {% csrf_token %}
   <div class="input-group">
@@ -13,12 +13,13 @@
   </div>
 </form>
 </div>
-<div class="col-md-8">
+<div class="col-sm-8">
 <h3>Log</h3>
 {% for l in log.object_list %}
 
-<div class="irc-event {% if l.msg_type == 'M' %}irc-m{% endif %}">
-  <span class="glyphicon glyphicon-time" data-toggle="tooltip" data-placement="left" title="{{l.time|date:"d.m.y @ H:i"}}"></span>
+<div class="irc-event {% if l.msg_type == 'M' %}irc-m{% endif %}"
+  data-toggle="tooltip" data-placement="left" title="{{l.time|date:"d.m.y"}}">
+  <small>{{l.time|date:"H:i"}}</small>
   <span class="irc-nick">{{l.nick}}</span>
   {% if l.msg_type == 'J' %}
   joined
@@ -60,7 +61,7 @@
 <div class="irc-paginator"><a href="/irc/{{log.previous_page_number}}/{{links.number}}">Newer</a></div>
 {% endif %}
 </div>
-<div class="col-md-4">
+<div class="col-sm-4">
   <div>
   <h3>Latest links</h3>
 
