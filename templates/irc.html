@@ -16,42 +16,37 @@
 <div class="col-md-8">
 {% for l in log.object_list %}
 
-
+<div class="irc-event"><div class="irc-date">({{l.time|date:"d.m.y @ H:i"}})</div><span class="irc-nick">{{l.nick}}</span>
 {% if l.msg_type == 'J' %}
-<div class="irc-event"><div class="irc-date">({{l.time|date:"d.m.y @ H:i"}})</div><span class="irc-nick">{{l.nick}}</span> joined</div>
+joined
 {% endif %}
 
 {% if l.msg_type == 'P' %}
-<div class="irc-event"><div class="irc-date">({{l.time|date:"d.m.y @ H:i"}})</div><span class="irc-nick">{{l.nick}}</span> parted</div>
+parted
 {% endif %}
 
 {% if l.msg_type == 'Q' %}
-<div class="irc-event"><div class="irc-date">({{l.time|date:"d.m.y @ H:i"}})</div><span class="irc-nick">{{l.nick}}</span> quit: {{l.message}}</div>
+quit: {{l.message}}
 {% endif %}
 
 {% if l.msg_type == 'T' %}
-<div class="irc-event"><div class="irc-date">({{l.time|date:"d.m.y @ H:i"}})</div><span class="irc-nick">{{l.nick}}</span> changed the topic to {{l.message}}</div>
+changed the topic to {{l.message}}
 {% endif %}
 
 {% if l.msg_type == 'N' %}
-<div class="irc-event"><div class="irc-date">({{l.time|date:"d.m.y @ H:i"}})</div><span class="irc-nick">{{l.nick}}</span> is now known as {{l.message}}</div>
+is now known as {{l.message}}
 {% endif %}
 
 {% if l.msg_type == 'M' %}
 
-	{% if l.msg_action %}
-	<div class="irc-action"><div class="irc-date">({{l.time|date:"d.m.y @ H:i"}})</div><span class="irc-nick">{{l.nick}}</span> {{l.message}}</div>
-
-	{% else %}
-
-	<div class="irc-message">
-	<div class="irc-date">({{l.time|date:"d.m.y @ H:i"}})</div><span class="irc-nick">{{l.nick}}</span>: {{l.message}}
-	</div>
-
-	{% endif %}
-
+  {% if l.msg_action %}
+    ACTION {{l.message}}
+  {% else %}
+    {{l.message}}
+  {% endif %}
 
 {% endif %}
+</div>
 {% endfor %}
 <div style="clear:both"></div>
 {% if log.has_next %}
@@ -63,41 +58,41 @@
 {% endif %}
 </div>
 <div class="col-md-4">
-	<div>
-	<h3>Latest links:</h3>
+  <div>
+  <h3>Latest links:</h3>
 
-	{% for l in links.object_list %}
-	<div class="irc-links-content">
-	<a href="{{l.link}}" title="{{l.irc.nick}}: {{l.irc.message}}">{{ l.link|slice:":40" }}</a>
-	</div>
-	{% endfor %}
+  {% for l in links.object_list %}
+  <div class="irc-links-content">
+  <a href="{{l.link}}" title="{{l.irc.nick}}: {{l.irc.message}}">{{ l.link|slice:":40" }}</a>
+  </div>
+  {% endfor %}
 
-	{% if links.has_next %}
-	<div class="irc-paginator"><a href="/irc/{{log.number}}/{{links.next_page_number}}">Older</a></div>
-	{% endif %}
+  {% if links.has_next %}
+  <div class="irc-paginator"><a href="/irc/{{log.number}}/{{links.next_page_number}}">Older</a></div>
+  {% endif %}
 
-	{% if links.has_previous %}
-	<div class="irc-paginator"><a href="/irc/{{log.number}}/{{links.previous_page_number}}">Newer</a></div>
-	{% endif %}
+  {% if links.has_previous %}
+  <div class="irc-paginator"><a href="/irc/{{log.number}}/{{links.previous_page_number}}">Newer</a></div>
+  {% endif %}
 
-	</div>
-	<div>
-	<h3>Karma stats:</h3>
-	<h4>This week:</h4>
-	{% for k in karma_week %}
-	{{ k.nick }} {{k.karma}}<br />
-	{% endfor %}
-	<h4>This month:</h4>
-	{% for k in karma_month %}
-	{{ k.nick }} {{k.karma}}<br />
-	{% endfor %}
-	<h4>All time:</h4>
-	{% for k in karma %}
-	{{ k.nick }} {{k.karma}}<br />
-	{% endfor %}
-	</div>
-	<h3>Database dump</h3>
-	<a href="/irc/dump">Dump</a>
+  </div>
+  <div>
+  <h3>Karma stats:</h3>
+  <h4>This week:</h4>
+  {% for k in karma_week %}
+  {{ k.nick }} {{k.karma}}<br />
+  {% endfor %}
+  <h4>This month:</h4>
+  {% for k in karma_month %}
+  {{ k.nick }} {{k.karma}}<br />
+  {% endfor %}
+  <h4>All time:</h4>
+  {% for k in karma %}
+  {{ k.nick }} {{k.karma}}<br />
+  {% endfor %}
+  </div>
+  <h3>Database dump</h3>
+  <a href="/irc/dump">Dump</a>
 </div>
 </div>
 {% endblock %}
