@@ -2,8 +2,8 @@
 import os
 PROJECT_PATH = os.path.abspath(os.path.dirname(__file__))
 
-DEFAULT_TITLE = "Psywerx.net"
-DEFAULT_FOOTER = "&copy; Psywerx.net"
+DEFAULT_TITLE = "Psywerx"
+DEFAULT_FOOTER = '<a rel="license" href="http://creativecommons.org/licenses/by-sa/4.0/"><img alt="Creative Commons License" style="border-width:0" src="https://i.creativecommons.org/l/by-sa/4.0/80x15.png" /></a>'
 
 DEBUG = True
 TEMPLATE_DEBUG = DEBUG
