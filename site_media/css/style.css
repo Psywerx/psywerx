@@ -5,6 +5,7 @@
 .irc-event {
   padding: 4px 0px;
   opacity: 0.6;
+  word-wrap: break-word;
 }
 
 .irc-m {
