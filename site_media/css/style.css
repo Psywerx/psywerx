@@ -1,0 +1,12 @@
+.irc-nick {
+  font-weight: bold;
+}
+
+.irc-event {
+  padding: 4px 0px;
+  opacity: 0.6;
+}
+
+.irc-m {
+  opacity: 1;
+}
