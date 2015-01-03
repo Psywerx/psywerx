@@ -78,6 +78,14 @@ MAGIC_WORD = "6cf28bcedc3a628a4896817156e1ace5108ce6266a00fd556861d656"
 COOKIE_TOKEN = "2d9aa7a812f458a8d278d35272c6dc28b03357b7db38e553ea98a7f0"
 CHANNEL = "#psywerx"
 def irc(request, page=1, link_page=1):
+    def _remove_duplicate_nicks(karma):
+        d = {}
+        for k in karma:
+            if k['nick'][:4] not in d:
+                d[k['nick'][:4]] = {'nick': k['nick'], 'karma': k['karma']}
+            else:
+               d[k['nick'][:4]]['karma'] += k['karma']
+        return sorted([d[dd] for dd in d], key=lambda k:k['karma'], reverse=True)[:5]
 
     # Set the cookie
     if request.POST:
@@ -103,15 +111,18 @@ def irc(request, page=1, link_page=1):
         links_p = Paginator(links, 10)
 
         # all time:
-        karma = Karma.objects.all().filter(channel__iexact = CHANNEL,time__year = datetime.now().year).values('nick').annotate(karma=Count('nick')).order_by('-karma')[:5]
+        karma = Karma.objects.all().filter(channel__iexact = CHANNEL,time__year = datetime.now().year).values('nick').annotate(karma=Count('nick')).order_by('-karma')
+        karma = _remove_duplicate_nicks(karma)
 
         # this week:
         week_start = date.today() - timedelta(days = date.today().weekday())
-        karma_week = Karma.objects.filter(time__gte = week_start, channel__iexact = CHANNEL, time__year = datetime.now().year).values('nick').annotate(karma=Count('nick')).order_by('-karma')[:5]
+        karma_week = Karma.objects.filter(time__gte = week_start, channel__iexact = CHANNEL, time__year = datetime.now().year).values('nick').annotate(karma=Count('nick')).order_by('-karma')
+        karma_week = _remove_duplicate_nicks(karma_week)
 
         # this month:
         month_start = date.today() - timedelta(days = date.today().day-1)
-        karma_month = Karma.objects.filter(time__gte = month_start, channel__iexact = CHANNEL, time__year = datetime.now().year).values('nick').annotate(karma=Count('nick')).order_by('-karma')[:5]
+        karma_month = Karma.objects.filter(time__gte = month_start, channel__iexact = CHANNEL, time__year = datetime.now().year).values('nick').annotate(karma=Count('nick')).order_by('-karma')
+        karma_month = _remove_duplicate_nicks(karma_month)
 
 
         return render_to_response('irc.html', {'log': p.page(page), 'links': links_p.page(link_page), 'karma':karma, 'karma_week':karma_week, 'karma_month':karma_month}, context_instance=RequestContext(request))
