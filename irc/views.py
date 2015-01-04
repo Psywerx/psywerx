@@ -39,11 +39,12 @@ def karma_nick(request):
         if request.POST["token"] == TOKEN:
             if "nick" in request.POST:
                 nick = request.POST['nick'][:4]
-                karmaQuery = Karma.objects.filter(nick__startswith=nick, channel__iexact = request.POST['channel'], time__year = datetime.now().year)
+                karmaQuery = Karma.objects.filter(nick__startswith=nick, channel__iexact=request.POST['channel'], time__year=datetime.now().year)
                 nicks = set(k.nick for k in karmaQuery)
-                nicks.remove(request.POST['nick'])
+                if request.POST['nick'] in nicks:
+                    nicks.remove(request.POST['nick'])
                 combined_karma = len(karmaQuery)
-                karma = len(Karma.objects.filter(nick = request.POST['nick'], channel__iexact = request.POST['channel'], time__year = datetime.now().year))
+                karma = len(Karma.objects.filter(nick=request.POST['nick'], channel__iexact=request.POST['channel'], time__year=datetime.now().year))
                 if combined_karma > karma:
                     karma = ("%s (or %s with his other nicknames - " + ", ".join(nicks) + ")") % (karma, combined_karma)
             else:
