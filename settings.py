@@ -13,7 +13,7 @@ MANAGERS = ADMINS
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3', # Add 'postgresql_psycopg2', 'postgresql', 'mysql', 'sqlite3' or 'oracle'.
+        'ENGINE': 'django.db.backends.mysql', # Add 'postgresql_psycopg2', 'postgresql', 'mysql', 'sqlite3' or 'oracle'.
         'NAME': 'psywerx',                      # Or path to database file if using sqlite3.
         'USER': 'psywerx',                      # Not used with sqlite3.
         'PASSWORD': 'psywerx lol',                  # Not used with sqlite3.
@@ -86,8 +86,8 @@ TEMPLATE_CONTEXT_PROCESSORS = (
     "django.contrib.messages.context_processors.messages",
     'web.context.settings',
 )
-                               
-                        
+
+
 
 ROOT_URLCONF = 'psywerx.urls'
 
