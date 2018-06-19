@@ -15,9 +15,9 @@ DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql', # Add 'postgresql_psycopg2', 'postgresql', 'mysql', 'sqlite3' or 'oracle'.
         'NAME': 'psywerx',                      # Or path to database file if using sqlite3.
-        'USER': 'psywerx',                      # Not used with sqlite3.
-        'PASSWORD': 'psywerx lol',                  # Not used with sqlite3.
-        'HOST': '',                      # Set to empty string for localhost. Not used with sqlite3.
+        'USER': 'root',                      # Not used with sqlite3.
+        'PASSWORD': 'root',                  # Not used with sqlite3.
+        'HOST': 'db',                      # Set to empty string for localhost. Not used with sqlite3.
         'PORT': '',                      # Set to empty string for default. Not used with sqlite3.
     }
 }
@@ -89,7 +89,7 @@ TEMPLATE_CONTEXT_PROCESSORS = (
 
 
 
-ROOT_URLCONF = 'psywerx.urls'
+ROOT_URLCONF = 'urls'
 
 TEMPLATE_DIRS = (
     # The path shall not be absolute (sort of):
