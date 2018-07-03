@@ -4,11 +4,15 @@ from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import render_to_response
 from django.template import RequestContext
 from django.views.decorators.csrf import csrf_exempt
-from irc.models import Irc, Link, Karma, GroupMembers
+try:
+    from irc.models import Irc, Link, Karma, GroupMembers
+except ImportError:
+    print('ImportError: No module named irc.models')
 from datetime import date, timedelta, datetime
 from collections import defaultdict
 import hashlib
 import json
+import sys
 
 TOKEN = '16edde56d1801c65ec96a4d607a67d89'
 
@@ -75,7 +79,7 @@ def dump_karma(request):
     out = [{"nick": a.nick, "time": str(a.time), "channel": a.channel} for a in Karma.objects.all()]
     return HttpResponse(json.dumps(out), mimetype="application/json")
 
-MAGIC_WORD = "6cf28bcedc3a628a4896817156e1ace5108ce6266a00fd556861d656"
+MAGIC_WORD = "d7905f96bc2f09a65d6fd3eebee98bc2990cabddf801b6593f1b1209"
 COOKIE_TOKEN = "2d9aa7a812f458a8d278d35272c6dc28b03357b7db38e553ea98a7f0"
 CHANNEL = "#psywerx"
 def irc(request, page=1, link_page=1):
