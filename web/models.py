@@ -1,6 +1,4 @@
 from django.db import models
-from django.template.defaultfilters import default
-import re
 
 PROJECT_STATUS = (
     ('D', 'Development'),

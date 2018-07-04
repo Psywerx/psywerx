@@ -1,8 +1,6 @@
 import re
 from django.db import models
 from django.db.models.aggregates import Count
-# when linting use pylint models.py --load-plugins pylint_django
-# test
 ACTION_START = u"\u0001" + "ACTION"
 ACTION_END = u"\u0001"
 
