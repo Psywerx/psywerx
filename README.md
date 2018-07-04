@@ -1,6 +1,8 @@
-http://psywerx.net/
+# Psywerx.net
 
-# Dev environment
+[![CircleCI](https://circleci.com/gh/Psywerx/psywerx.svg?style=svg)](https://circleci.com/gh/Psywerx/psywerx)
+
+## Dev environment
 
 ```
 $ docker-compose up -d
