@@ -1,0 +1,24 @@
+[MESSAGES CONTROL]
+
+# Disable all, then whitelist what we want
+disable=all
+
+# Enable the following
+# E0602: undefined variable
+# E0104: Return outside function
+# E0105: Yield outside function
+# E0106: Return with argument inside generator
+# E0213: Method should have "self" as first argument
+# E1121: Too many positional arguments for function call
+# E1205: Too many arguments for logging format string
+# E1206: Not enough arguments for logging format string
+# E1305: Too many arguments for format string
+# E1306: Not enough arguments for format string
+# W0311: Bad indentation. Found %s %s, expected %s
+# W0301: Unnecessary semicolon
+# W0621: Redefining name %r from outer scope (line %s)
+# W0622: Redefining built-in %r
+# W0632: Possible unbalanced tuple unpacking with sequence%s: …
+# W0612: unused variable
+# W0611: unused import
+enable=E0106,E0104,E0105,E0213,E0601,E1121,E1205,E1206,E1305,E1306,W0311,W0301,W0621,W0622,W0632,W0612,W0611
