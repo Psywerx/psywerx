@@ -85,7 +85,7 @@ def irc(request, page=1, link_page=1):
             if k['nick'][:4] not in d:
                 d[k['nick'][:4]] = {'nick': k['nick'], 'karma': k['karma']}
             else:
-               d[k['nick'][:4]]['karma'] += k['karma']
+                d[k['nick'][:4]]['karma'] += k['karma']
         return sorted([d[dd] for dd in d], key=lambda k:k['karma'], reverse=True)[:5]
 
     # Set the cookie
@@ -177,5 +177,5 @@ def mention(request):
         if request.POST["token"] != TOKEN:
             return HttpResponse("NO")
         members = GroupMembers.mention(request.POST['group'], request.POST['channel'])
-        out = [(m.nick, m.channel, m.offline) for m in members];
+        out = [(m.nick, m.channel, m.offline) for m in members]
         return HttpResponse(json.dumps(out), mimetype="application/json")
