@@ -1,14 +1,41 @@
 version: 2
 jobs:
-  build:
+  lint:
     docker:
       - image: circleci/python:2.7-jessie-browsers
 
     steps:
       - checkout 
-      
+
       - run:
           command: sudo pip install -r requirements.txt
       
       - run:
           command: pylint irc web urls.py settings.py
+
+  test:
+    docker:
+      - image: circleci/python:2.7-jessie-browsers
+      - image: circleci/mysql:5.7
+        environment:
+          MYSQL_ROOT_PASSWORD: 'root'
+          MYSQL_DATABASE: psywerx
+
+    steps:
+      - checkout 
+
+      - run:
+          command: sudo apt-get install mysql-client python-mysqldb mysql-server
+
+      - run:
+          command: sudo pip install -r requirements.txt 
+
+      - run:
+          command: sudo python manage.py test irc web 
+
+workflows:
+  version: 2
+  lint_and_test:
+    jobs:
+      - lint
+      - test
