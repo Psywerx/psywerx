@@ -6,7 +6,6 @@ Replace this with more appropriate tests for your application.
 """
 # $ python manage.py dumpdata irc.Irc --format json --indent 4 > irc/fixtures/messages.json
 # $ python manage.py loaddata irc/fixtures/messages.json
-import datetime
 
 from django.test import TestCase
 from .models import Irc, MSG_TYPES
@@ -47,14 +46,12 @@ class IrcFixturesTests(TestCase):
         self.assertEquals(instance.__unicode__(), time)
 
     def test_parse_metod(self):
-        instance = Irc.objects.get(pk=4)
         pass
 
     def test_nick_time_label(self):
         """
         Tests that nickname and time are correctly labled.
         """
-        message = Irc.objects.get(pk=2)
         nick_label = Irc._meta.get_field('nick').verbose_name
         self.assertEquals(nick_label,'nick')
         time_label = Irc._meta.get_field('time').verbose_name
@@ -102,10 +99,7 @@ MSG_TYPES_STANDARD = (
         print(public_m.__unicode__)
         print(public_m.time)
         self.assertEquals(public_m.message, 'testing private')
-        self.assertEquals(public_m.msg_type, 'PM')"""
+        self.assertEquals(public_m.msg_type, 'PM')
+"""
 
 
-"""
-idea: iterate through msg types to see if the type is still implemented
-idea: test for unicode - ex. someone deletes raw, cause he thinks its unimportant, but this test catches the mistake
-"""
