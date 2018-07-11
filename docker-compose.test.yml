@@ -1,6 +1,0 @@
-version: "2"
-services:
-  psywerx:
-    build: .
-    command: chmod +x manage.py
-    command: python manage.py test irc web

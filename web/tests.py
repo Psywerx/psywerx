@@ -6,7 +6,6 @@ Replace these with more appropriate tests for your application.
 """
 
 from django.test import TestCase
-import re
 
 class SimpleTest(TestCase):
     def test_basic_addition(self):
@@ -36,23 +35,18 @@ class WebViewTests(TestCase):
         with the class jumbatron, contains no empty paragraphs and that charset is utf-8
         """    
         response = self.client.get('')
+        html_no_space = response.content.replace(" ", "")
         
-        correct_title = False
-        if "<title>Psywerx</title>" in response.content.replace(" ", ""):
-            correct_title = True
-        self.assertIs(correct_title, True)
+        self.assertIn('<title>Psywerx</title>', html_no_space)
 
         has_jumbatron = False
-        if 'class="jumbotron"' or "class='jumbotron'" in response.content.replace(" ", ""):
+        if 'class="jumbotron"' in html_no_space or "class='jumbotron'" in html_no_space:
             has_jumbatron = True
         self.assertIs(has_jumbatron, True)
 
-        has_empty_paragraphs = False
-        if re.search(r'<p>(\n*)</p>', response.content.replace(" ", "")):
-            has_empty_paragraphs = True
-        self.assertIs(has_empty_paragraphs, False)
-
+        self.assertNotIn(r'<p>(\n*)</p>', html_no_space)
+        
         has_utf = False
-        if "charset='utf-8'" or 'charset="utf-8"' in response.content.replace(" ", ""):
+        if "charset='utf-8'" in html_no_space or 'charset="utf-8"' in html_no_space:
             has_utf = True
         self.assertIs(has_utf, True)

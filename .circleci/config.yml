@@ -31,7 +31,7 @@ jobs:
           command: sudo pip install -r requirements.txt 
 
       - run:
-          command: sudo python manage.py test irc web 
+          command: python manage.py test irc web 
 
 workflows:
   version: 2
