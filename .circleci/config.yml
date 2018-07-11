@@ -31,7 +31,10 @@ jobs:
           command: sudo pip install -r requirements.txt 
 
       - run:
-          command: python manage.py test irc web 
+          command: coverage run --source='.' manage.py test irc web
+        
+      - run:
+          command: coverage report && codecov --token=5a9f2937-a911-4c69-b887-2a2a45e93b09
 
 workflows:
   version: 2
