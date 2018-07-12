@@ -16,4 +16,6 @@ COPY requirements.txt /app
 
 RUN pip install -r requirements.txt
 
+COPY manage.py pylintrc settings.py urls.py __init__.py web templates site_media irc /app/
+
 CMD bash -c 'tail -f requirements.txt'

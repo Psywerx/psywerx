@@ -1,0 +1,62 @@
+[
+    {
+        "pk": 1, 
+        "model": "irc.irc", 
+        "fields": {
+            "name": "", 
+            "msg_type": "PM", 
+            "nick": "baloncek", 
+            "time": "2018-10-11 16:05:00", 
+            "raw": "", 
+            "msg_action": false, 
+            "address": "", 
+            "message": "testing private", 
+            "channel": ""
+        }
+    }, 
+    {
+        "pk": 2, 
+        "model": "irc.irc", 
+        "fields": {
+            "name": "", 
+            "msg_type": "M", 
+            "nick": "baloncek", 
+            "time": "2018-10-11 16:05:00", 
+            "raw": "", 
+            "msg_action": false, 
+            "address": "", 
+            "message": "testing public", 
+            "channel": ""
+        }
+    }, 
+    {
+        "pk": 3, 
+        "model": "irc.irc", 
+        "fields": {
+            "name": "", 
+            "msg_type": "J", 
+            "nick": "baloncek", 
+            "time": "2018-10-11 16:05:00", 
+            "raw": "", 
+            "msg_action": false, 
+            "address": "", 
+            "message": "joining new channel", 
+            "channel": ""
+        }
+    }, 
+    {
+        "pk": 4, 
+        "model": "irc.irc", 
+        "fields": {
+            "name": "", 
+            "msg_type": "M", 
+            "nick": "baloncek", 
+            "time": "2019-10-11 16:05:00", 
+            "raw": "", 
+            "msg_action": false, 
+            "address": "", 
+            "message": "message from the future", 
+            "channel": ""
+        }
+    }
+]
