@@ -27,7 +27,7 @@ class WebViewTests(TestCase):
         Tests that the homepage loads correctly
         """
         response = self.client.get('')
-        self.assertEqual(response.status_code, 200)
+        self.assertIn('<h1>Psywerx</h1>', response.content)
 
     def test_basic_html(self):
         """
@@ -35,18 +35,18 @@ class WebViewTests(TestCase):
         with the class jumbatron, contains no empty paragraphs and that charset is utf-8
         """    
         response = self.client.get('')
-        html_no_space = response.content.replace(" ", "")
+        html_content = response.content
         
-        self.assertIn('<title>Psywerx</title>', html_no_space)
-
-        has_jumbatron = False
-        if 'class="jumbotron"' in html_no_space or "class='jumbotron'" in html_no_space:
-            has_jumbatron = True
-        self.assertIs(has_jumbatron, True)
-
-        self.assertNotIn(r'<p>(\n*)</p>', html_no_space)
+        self.assertIn('<title>Psywerx</title>', html_content)
         
-        has_utf = False
-        if "charset='utf-8'" in html_no_space or 'charset="utf-8"' in html_no_space:
-            has_utf = True
-        self.assertIs(has_utf, True)
+        self.assertIn('<div class="jumbotron">', html_content)
+        
+        self.assertIn('<meta charset="utf-8">', html_content)
+
+    def test_wrong_url(self):
+        """
+        Tests that trying to reach an url that doesn't exist results in 
+        404.html loading
+        """
+        response = self.client.get('/nonexistenturl')
+        self.assertContains(response, 'The force is wrong with your url...')

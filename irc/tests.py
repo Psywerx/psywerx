@@ -33,7 +33,7 @@ class IrcViewTests(TestCase):
         Tests that the login page loads correctly
         """
         response = self.client.get('/irc/')
-        self.assertEqual(response.status_code, 200)
+        self.assertContains(response, '<input type="password" name="word" placeholder="Enter the magic word.">')
 
     def test_login_reloads_correctly(self):
         """
@@ -42,7 +42,7 @@ class IrcViewTests(TestCase):
         """
         response = self.client.post('/irc/', {'word': 'wrongpass'})
         response = self.client.get('/irc/')
-        self.assertEqual(response.status_code, 200)
+        self.assertContains(response, '<input type="password" name="word" placeholder="Enter the magic word.">')
 
 
 class IrcFixturesTests(TestCase):
