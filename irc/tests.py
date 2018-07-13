@@ -100,7 +100,6 @@ class IrcFixturesTests(TestCase):
         """
         instance = Irc()
         channel = 'channel'
-        char = '#'
         response = 'OK'
 
         # Tests response if an error occurs
@@ -121,8 +120,9 @@ class IrcFixturesTests(TestCase):
         self.assertEquals(instance.parse(raw, channel), response)
 
         # tests response if message is anything else that is valid(starts with 'PART', 'QUIT', 'JOIN' or 'NICK')
-        raw = ':nick!name@address {0} #test :Hello, world!'.format('PART', 'QUIT', 'JOIN', 'NICK')
-        self.assertEquals(instance.parse(raw, channel), response)
+        for command in ('PART', 'QUIT', 'JOIN', 'NICK'):
+            raw = ':nick!name@address {0} #test :Hello, world!'.format(command)
+            self.assertEquals(instance.parse(raw, channel), response)
 
         #tests response if message has a link in it
         raw = ':nick!name@address TOPIC #test :https://www.youtube.com/'
