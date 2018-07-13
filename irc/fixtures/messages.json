@@ -58,5 +58,25 @@
             "message": "message from the future", 
             "channel": ""
         }
+    },
+    {
+        "pk": 10, 
+        "model": "irc.GroupMembers", 
+        "fields": {
+            "nick": "baloncek", 
+            "group": "psywerx",
+            "offline": true,
+            "channel": "channel"
+        }
+    },
+    {
+        "pk": 11, 
+        "model": "irc.GroupMembers", 
+        "fields": {
+            "nick": "friend", 
+            "group": "psywerx",
+            "offline": true,
+            "channel": "channel"
+        }
     }
 ]

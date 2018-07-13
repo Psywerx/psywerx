@@ -34,7 +34,7 @@ jobs:
           command: coverage run --source='.' manage.py test irc web
         
       - run:
-          command: coverage report && codecov --token=71eeb7aa-0a5e-494f-b8e5-000e6fe95340
+          command: coverage report && codecov --token=5a9f2937-a911-4c69-b887-2a2a45e93b09
 
 workflows:
   version: 2
