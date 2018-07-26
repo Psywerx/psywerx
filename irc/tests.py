@@ -8,6 +8,7 @@ Replace this with more appropriate tests for your application.
 from django.test import TestCase
 from mock import patch 
 from .models import *
+from .views import *
 import hashlib
 
 MSG_TYPES_STANDARD = (
@@ -49,7 +50,7 @@ class IrcViewTests(TestCase):
     @patch('irc.views.MAGIC_WORD', hashlib.sha224('root').hexdigest())
     def test_login(self):
         """
-        Tests that logging in gives you a cookie
+        Tests that logging in gives you a cookie and loads the right page
         """
         response = self.client.post('/irc/', {'word': 'root'})
         self.assertTrue(response.cookies['irctoken'])

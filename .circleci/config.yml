@@ -34,7 +34,7 @@ jobs:
           command: coverage run --source='.' manage.py test irc web
         
       - run:
-          command: coverage report && codecov --token=5a9f2937-a911-4c69-b887-2a2a45e93b09
+          command: coverage report && codecov --token=$COVERAGE_TOKEN
 workflows:
   version: 2
   lint_and_test:

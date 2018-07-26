@@ -9,6 +9,11 @@ ADMINS = (
     # ('Your Name', 'your_email@domain.com'),
 )
 
+MAGIC_WORD = "6cf28bcedc3a628a4896817156e1ace5108ce6266a00fd556861d656"
+COOKIE_TOKEN = "2d9aa7a812f458a8d278d35272c6dc28b03357b7db38e553ea98a7f0"
+CHANNEL = "#psywerx"
+TOKEN = '16edde56d1801c65ec96a4d607a67d89'
+
 MANAGERS = ADMINS
 
 DATABASES = {
