@@ -58,6 +58,23 @@ class IrcViewTests(TestCase):
         self.assertContains(response, '<a href="/irc/dump_karma">Dump Karma</a>')
         self.assertContains(response, '<h4>This month:</h4>')
 
+    @patch('irc.views.MAGIC_WORD', hashlib.sha224('root').hexdigest())
+    def test_irc_bot_add_nothing(self):
+        """
+        Tests that the irc_bot_add method responds with NO if no token is passed 
+        """
+        response = self.client.post('/irc/', {'word': 'root'})
+        response = self.client.get('/irc/add')
+        self.assertContains(response, 'NO')
+
+    @patch('irc.views.MAGIC_WORD', hashlib.sha224('root').hexdigest())
+    def test_irc_bot_add(self):
+        """
+        Tests that the irc_bot_add method responds with OK if the correct token TOKEN is passed 
+        """
+        response = self.client.post('/irc/add', {'raw': ':nick!name@address PRIVMSG #test :Hello!', 'channel': '#psywerx', 'token': '16edde56d1801c65ec96a4d607a67d89'})
+        self.assertContains(response, 'OK')
+
 class IrcFixturesTests(TestCase):
     fixtures = ['messages.json']
 
@@ -106,24 +123,45 @@ class IrcFixturesTests(TestCase):
         # Tests response if an error occurs
         raw = 'ERROR'
         self.assertEquals(instance.parse(raw, channel), response)
+        self.assertEquals(instance.msg_type, 'E')
 
-        # Tests response if message is private and has a # (msg_type = M)
+        # Tests response if message is private and has a #channel
+        # msg_type must be PM, msg_action must be false
         raw = ':nick!name@address PRIVMSG #test :Hello, world!'
         self.assertEquals(instance.parse(raw, channel), response)
+        self.assertEquals(instance.msg_type, 'M')
+        expected_message = raw.split(' ', 2)[2].split(' :', 1)[1]
+        self.assertEquals(expected_message, instance.message)
+        self.assertFalse(instance.msg_action)
 
-        # Tests response if message is private(starts with PRIVMSG) and doesn't have a # (msg_type = PM) and
-        # message starts with ACTION_START and message ends with ACTION_END
+        # Tests response if message is private(starts with PRIVMSG and doesn't have a channel name, preceeded by #), 
+        # message starts after ACTION_START and ends before ACTION_END
+        # msg_type must be M, msg_action must be true
         raw = ':hello!sir@madam PRIVMSG test :{0}Hello, world!{1}'.format(ACTION_START, ACTION_END)
+        expected_message = raw.split(' ', 2)[2].split(' :', 1)[1][7:-1]
         self.assertEquals(instance.parse(raw, channel), response)
+        self.assertEquals(instance.msg_type, 'PM')
+        self.assertEquals(expected_message, instance.message)
+        self.assertNotIn(ACTION_START, instance.message)
+        self.assertTrue(instance.msg_action)
 
         # Tests response if message is a topic(start with TOPIC)
+        # msg_type must be T, msg_action must be false
         raw = ':nick!name@address TOPIC #test :Hello, world!'
         self.assertEquals(instance.parse(raw, channel), response)
+        expected_message = raw.split(' ', 2)[2].split(' :', 1)[1]
+        self.assertEquals(expected_message, instance.message)
+        self.assertEquals(instance.msg_type, 'T')
+        self.assertFalse(instance.msg_action)
 
         # tests response if message is anything else that is valid(starts with 'PART', 'QUIT', 'JOIN' or 'NICK')
-        for command in ('PART', 'QUIT', 'JOIN', 'NICK'):
+        # msg_type must be the first letter of the command name, msg_action must be false
+        command_list = ('PART', 'QUIT', 'JOIN', 'NICK')
+        for command in command_list:
             raw = ':nick!name@address {0} #test :Hello, world!'.format(command)
             self.assertEquals(instance.parse(raw, channel), response)
+            self.assertEquals(instance.msg_type, command[0])
+            self.assertFalse(instance.msg_action)
 
         #tests response if message has a link in it
         raw = ':nick!name@address TOPIC #test :https://www.youtube.com/'
@@ -144,14 +182,3 @@ class GroupMembersFixturesTests(TestCase):
         instance = GroupMembers.objects.get(pk=10)
         data = instance.nick + " " + instance.group + " " + instance.channel + " "
         self.assertEquals(instance.__unicode__(), data)
-
-    def test_join_method(self):
-        """
-        Tests the join method in GroupMembers: firstUser an empty object, function fills
-        it with provided data, secondUser gets joined into the group
-        """
-        firstUser = GroupMembers()
-        secondUser = GroupMembers.objects.get(pk=11)
-
-        firstUser.join('newUser', 'newGroup', False, 'psywerx')
-        secondUser.join(secondUser.nick, secondUser.group, secondUser.offline, secondUser.channel)
