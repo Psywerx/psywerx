@@ -50,6 +50,8 @@ def karma_nick(request):
                 karma = len(Karma.objects.filter(nick=request.POST['nick'], channel__iexact=request.POST['channel'], time__year=datetime.now().year))
                 if combined_karma > karma:
                     karma = ("%s (or %s with his other nicknames - " + ", ".join(nicks) + ")") % (karma, combined_karma)
+                else:
+                    karma = "%s" %karma
             else:
                 d = defaultdict(int)
                 dn = {}

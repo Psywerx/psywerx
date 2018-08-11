@@ -15,6 +15,7 @@ DATABASES = {
 
 # Change the password you use locally to access /irc
 MAGIC_WORD = "root"
+MAGIC_WORD = hashlib.sha224(MAGIC_WORD).hexdigest()
 
 CHANNEL = "#psywerx"
 
@@ -27,5 +28,3 @@ TIME_ZONE = 'Europe/Ljubljana'
 # Language code for this installation. All choices can be found here:
 # http://www.i18nguy.com/unicode/language-identifiers.html
 LANGUAGE_CODE = 'si'
-
-MAGIC_WORD = hashlib.sha224(MAGIC_WORD).hexdigest()

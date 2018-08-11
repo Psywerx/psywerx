@@ -7,6 +7,7 @@ Replace these with more appropriate tests for your application.
 
 from django.test import TestCase
 from .models import *
+from web.models import Static
 
 class SimpleTest(TestCase):
     def test_basic_addition(self):
@@ -51,3 +52,12 @@ class WebViewTests(TestCase):
         """
         response = self.client.get('/nonexistenturl')
         self.assertContains(response, 'The force is wrong with your url...')
+
+    def test_site_title(self):
+        """
+        Tests that you can set a custom site title and footer
+        """
+        Static.objects.create(title='Custom Header', footer='Custom Footer')
+        response = self.client.get('/')
+        self.assertContains(response, 'Custom Header')
+        self.assertContains(response, 'Custom Footer')
