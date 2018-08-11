@@ -146,6 +146,7 @@ def leave(request):
             return HttpResponse("NO")
         GroupMembers.leave(request.POST['nick'], request.POST['group'], request.POST['channel'])
         return HttpResponse(json.dumps("ok"), mimetype="application/json")
+    return HttpResponse("NO")
 
 @csrf_exempt
 def leaveAll(request):
@@ -154,6 +155,7 @@ def leaveAll(request):
             return HttpResponse("NO")
         GroupMembers.leaveAll(request.POST['nick'], request.POST['channel'])
         return HttpResponse(json.dumps("ok"), mimetype="application/json")
+    return HttpResponse("NO")
 
 @csrf_exempt
 def groups(request):
@@ -162,6 +164,7 @@ def groups(request):
             return HttpResponse("NO")
         ret = GroupMembers.groups(request.POST['channel'])
         return HttpResponse(json.dumps(', '.join(ret)), mimetype="application/json")
+    return HttpResponse("NO")
 
 @csrf_exempt
 def mygroups(request):
@@ -170,6 +173,7 @@ def mygroups(request):
             return HttpResponse("NO")
         ret = GroupMembers.mygroups(request.POST['channel'], request.POST['nick'])
         return HttpResponse(json.dumps(', '.join(ret)), mimetype="application/json")
+    return HttpResponse("NO")
 
 @csrf_exempt
 def mention(request):
@@ -179,3 +183,4 @@ def mention(request):
         members = GroupMembers.mention(request.POST['group'], request.POST['channel'])
         out = [(m.nick, m.channel, m.offline) for m in members]
         return HttpResponse(json.dumps(out), mimetype="application/json")
+    return HttpResponse("NO")
