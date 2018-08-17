@@ -35,6 +35,7 @@ class Irc(models.Model):
     def parse(self, s, channel):
         response = 'OK'
         self.raw = s
+        self.msg_action = False
         if s.startswith('ERROR'):
             self.msg_type = 'E'
         else:
@@ -59,7 +60,7 @@ class Irc(models.Model):
 
                 # check for ACTION:
                 if self.message.startswith(ACTION_START) and self.message.endswith(ACTION_END):
-                    self.message = self.message[8:]
+                    self.message = self.message[7:-1]
                     self.msg_action = True
 
             elif s[1] == 'TOPIC':

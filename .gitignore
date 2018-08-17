@@ -2,3 +2,4 @@
 *.db
 /venv
 psywerx
+local_settings.py

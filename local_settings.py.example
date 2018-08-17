@@ -1,0 +1,30 @@
+from settings import *
+import hashlib
+
+# Edit database values to your preference
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.mysql', # Add 'postgresql_psycopg2', 'postgresql', 'mysql', 'sqlite3' or 'oracle'.
+        'NAME': 'psywerx',                      # Or path to database file if using sqlite3.
+        'USER': 'root',                      # Not used with sqlite3.
+        'PASSWORD': 'root',                  # Not used with sqlite3.
+        'HOST': 'db',                      # Set to empty string for localhost. Not used with sqlite3.
+        'PORT': '',                      # Set to empty string for default. Not used with sqlite3.
+    }
+}
+
+# Change the password you use locally to access /irc
+MAGIC_WORD = "root"
+MAGIC_WORD = hashlib.sha224(MAGIC_WORD).hexdigest()
+
+CHANNEL = "#psywerx"
+
+COOKIE_TOKEN = "2d9aa7a812f458a8d278d35272c6dc28b03357b7db38e553ea98a7f0"
+TOKEN = '16edde56d1801c65ec96a4d607a67d89'
+
+# Change your local timezone 
+TIME_ZONE = 'Europe/Ljubljana'
+
+# Language code for this installation. All choices can be found here:
+# http://www.i18nguy.com/unicode/language-identifiers.html
+LANGUAGE_CODE = 'si'

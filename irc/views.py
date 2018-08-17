@@ -7,10 +7,13 @@ from django.views.decorators.csrf import csrf_exempt
 from irc.models import Irc, Link, Karma, GroupMembers
 from datetime import date, timedelta, datetime
 from collections import defaultdict
+try:
+    from local_settings import MAGIC_WORD, COOKIE_TOKEN, CHANNEL, TOKEN
+except ImportError:
+    from settings import MAGIC_WORD, COOKIE_TOKEN, CHANNEL, TOKEN
 import hashlib
 import json
 
-TOKEN = '16edde56d1801c65ec96a4d607a67d89'
 
 @csrf_exempt
 def irc_bot_add(request):
@@ -47,6 +50,8 @@ def karma_nick(request):
                 karma = len(Karma.objects.filter(nick=request.POST['nick'], channel__iexact=request.POST['channel'], time__year=datetime.now().year))
                 if combined_karma > karma:
                     karma = ("%s (or %s with his other nicknames - " + ", ".join(nicks) + ")") % (karma, combined_karma)
+                else:
+                    karma = "%s" %karma
             else:
                 d = defaultdict(int)
                 dn = {}
@@ -75,9 +80,6 @@ def dump_karma(request):
     out = [{"nick": a.nick, "time": str(a.time), "channel": a.channel} for a in Karma.objects.all()]
     return HttpResponse(json.dumps(out), mimetype="application/json")
 
-MAGIC_WORD = "6cf28bcedc3a628a4896817156e1ace5108ce6266a00fd556861d656"
-COOKIE_TOKEN = "2d9aa7a812f458a8d278d35272c6dc28b03357b7db38e553ea98a7f0"
-CHANNEL = "#psywerx"
 def irc(request, page=1, link_page=1):
     def _remove_duplicate_nicks(karma):
         d = {}
@@ -146,6 +148,7 @@ def leave(request):
             return HttpResponse("NO")
         GroupMembers.leave(request.POST['nick'], request.POST['group'], request.POST['channel'])
         return HttpResponse(json.dumps("ok"), mimetype="application/json")
+    return HttpResponse("NO")
 
 @csrf_exempt
 def leaveAll(request):
@@ -154,6 +157,7 @@ def leaveAll(request):
             return HttpResponse("NO")
         GroupMembers.leaveAll(request.POST['nick'], request.POST['channel'])
         return HttpResponse(json.dumps("ok"), mimetype="application/json")
+    return HttpResponse("NO")
 
 @csrf_exempt
 def groups(request):
@@ -162,6 +166,7 @@ def groups(request):
             return HttpResponse("NO")
         ret = GroupMembers.groups(request.POST['channel'])
         return HttpResponse(json.dumps(', '.join(ret)), mimetype="application/json")
+    return HttpResponse("NO")
 
 @csrf_exempt
 def mygroups(request):
@@ -170,6 +175,7 @@ def mygroups(request):
             return HttpResponse("NO")
         ret = GroupMembers.mygroups(request.POST['channel'], request.POST['nick'])
         return HttpResponse(json.dumps(', '.join(ret)), mimetype="application/json")
+    return HttpResponse("NO")
 
 @csrf_exempt
 def mention(request):
@@ -179,3 +185,4 @@ def mention(request):
         members = GroupMembers.mention(request.POST['group'], request.POST['channel'])
         out = [(m.nick, m.channel, m.offline) for m in members]
         return HttpResponse(json.dumps(out), mimetype="application/json")
+    return HttpResponse("NO")
