@@ -13,3 +13,5 @@ $ docker-compose exec psywerx bash # You are now in the psywerx container
 # python manage.py syncdb # set up the database tables
 # python manage.py runserver 0.0.0.0:8000 # start the server
 ```
+
+Testing some cool new features. Ignore me :) 
