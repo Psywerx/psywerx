@@ -3,7 +3,6 @@
 [![CircleCI](https://circleci.com/gh/Psywerx/psywerx.svg?style=svg)](https://circleci.com/gh/Psywerx/psywerx)
 [![codecov](https://codecov.io/gh/psywerx/psywerx/branch/master/graph/badge.svg)](https://codecov.io/gh/psywerx/psywerx)
 
-
 ## Dev environment
 
 ```
