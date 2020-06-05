@@ -1,4 +1,4 @@
-django==1.2.7
+django==1.11.29
 pylint==1.9.2
 MySQL-python==1.2.5
 codecov
